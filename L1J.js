@@ -70,7 +70,6 @@ function get_coords(e, obj) {
 }
 
 /* begin masteries rewrite */
-var queryDict = {};
 //TODO: DOn't redraw full thing each time
 //TODO: make load actually support partial adds
 
@@ -310,9 +309,6 @@ function check_finish(x) {
 }
 
 function masteries_init() {
-	
-	// this line by http://stackoverflow.com/users/985454/qwerty
-	location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});	
 	
 	mdat = document.getElementById("mdat");
 	canvas = document.getElementById("masteries_canvas");
