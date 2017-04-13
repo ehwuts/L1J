@@ -47,6 +47,7 @@ L1J.init = function() {
 	L1J.switch_view("masteries");
 }
 
+/* begin masteries rewrite */
 // get_coords based on http://www.chestysoft.com/imagefile/javascript/get-coordinates.asp
 function get_coords(e, obj) {
 	"use strict";
@@ -68,10 +69,21 @@ function get_coords(e, obj) {
 	
 	return [eventX - itemX, eventY - itemY];
 }
-
-/* begin masteries rewrite */
 //TODO: DOn't redraw full thing each time
 //TODO: make load actually support partial adds
+
+var L1J_m = {
+	"img" : { "icons" : new Image(), "icons_grey" : new Image(), "decoration" : new Image() },
+	"colors" : { 
+		"ferocity" : "#581800", 
+		"cunning" : "#332033", 
+		"resolve" : "#182C3D",
+		"text-can" : "",
+		"text-have" : "",
+		"text-sum" : "#eee"
+	},
+	"spacing" : 0
+};
 
 var masteries_json = '[[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}],[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}],[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}]]';
 var draw_layout = [[[[],[]],[[],[],[]],[[],[]],[[],[],[]],[[],[]],[[],[],[]]],[[[],[]],[[],[],[]],[[],[]],[[],[],[]],[[],[]],[[],[],[]]],[[[],[]],[[],[],[]],[[],[]],[[],[],[]],[[],[]],[[],[],[]]]];
@@ -87,11 +99,10 @@ var s;
 var ss = 0;
 var panel_width;
 
-var spacing;
 
 function setup_layout() {
 	var spare_height = canvas.height - 288;
-	spacing = Math.floor(spare_height / 9);
+	L1J_m.spacing = Math.floor(spare_height / 9);
 	
 	var width_base = Math.floor((panel_width - 144)/4);
 	
@@ -105,7 +116,7 @@ function setup_layout() {
 		while (row < draw_layout[panel].length) {
 			var col = 0;
 			while (col < draw_layout[panel][row].length) {
-				draw_layout[panel][row][col] = [panel*(panel_width+2) + (row%2?t2[draw_layout[panel][row].length-2][col]:t1[col]), (spacing)*(row + 1) + (row * 48)];
+				draw_layout[panel][row][col] = [panel*(panel_width+2) + (row%2?t2[draw_layout[panel][row].length-2][col]:t1[col]), (L1J_m.spacing)*(row + 1) + (row * 48)];
 				++col;
 			}
 			++row;
@@ -116,7 +127,7 @@ function setup_layout() {
 
 function which_cell_is_here(loc) {
 	var panel = Math.floor(loc[0] / panel_width);
-	var row = Math.floor(loc[1] / (48 + spacing));
+	var row = Math.floor(loc[1] / (48 + L1J_m.spacing));
 	var col = 0;
 	if (masteries[panel].length > row) while (col < masteries[panel][row].m.length) {
 		if (draw_layout[panel][row][col][0] <= loc[0] && draw_layout[panel][row][col][0] + 48 >= loc[0] && loc[1] >= draw_layout[panel][row][col][1]) {
@@ -137,10 +148,10 @@ function draw_cell(panel, row, col) {
 	//01100100 11001000 100101100
 	//console.log(id);
 	
-	context.drawImage(has?icons:icons_grey, 48*(id.charAt(2)-1) + 192*(id.charAt(0)-1), 48*(id.charAt(1)-1), 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
-	context.drawImage(decoration, has?0:48, 0, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
+	context.drawImage(has?L1J_m.img.icons:L1J_m.img.icons_grey, 48*(id.charAt(2)-1) + 192*(id.charAt(0)-1), 48*(id.charAt(1)-1), 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
+	context.drawImage(L1J_m.img.decoration, has?0:48, 0, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
 	if (row%2 == 0) {
-		context.drawImage(decoration, 0, (has?80:(could?64:48)), 31, 16, draw_layout[panel][row][col][0]+20, draw_layout[panel][row][col][1]+38, 31, 16);
+		context.drawImage(L1J_m.img.decoration, 0, (has?80:(could?64:48)), 31, 16, draw_layout[panel][row][col][0]+20, draw_layout[panel][row][col][1]+38, 31, 16);
 		context.textAlign = "left";
 		context.font = "11px sans-serif";
 		context.fillStyle = (has?"#fe0":(could?"#08f":"#aaa"));
@@ -149,7 +160,7 @@ function draw_cell(panel, row, col) {
 }
 
 function draw_spent() {	
-	var offset = 288 + 7*spacing;
+	var offset = 288 + 7*L1J_m.spacing;
 	var offset2 = offset + (canvas.height - offset)/2;
 	
 	context.fillStyle = "#581800";
@@ -315,21 +326,21 @@ function masteries_init() {
 	context = canvas.getContext("2d");
 	panel_width = Math.floor((canvas.width - 4) / 3);
 	
-	context.fillStyle = "#581800";
+	context.fillStyle = L1J_m.colors.ferocity;
 	context.fillRect(0,0,(canvas.width - 4)/3,canvas.height);
-	context.fillStyle = "#332033";
+	context.fillStyle = L1J_m.colors.cunning;
 	context.fillRect((canvas.width - 4)/3 + 2,0,(canvas.width - 4)/3,canvas.height);
-	context.fillStyle = "#182C3D";
+	context.fillStyle = L1J_m.colors.resolve;
 	context.fillRect((canvas.width - 4)*2/3 + 4,0,(canvas.width - 4)/3,canvas.height);
 	
 	setup_layout();
 	
-	icons.src = "img/masteries.png";
-	icons.onload = check_finish;
-	icons_grey.src = "img/masteries_grey.png";
-	icons_grey.onload = check_finish;	
-	decoration.src = "img/decoration.png";
-	decoration.onload = check_finish;
+	L1J_m.img.icons.src = "img/masteries.png";
+	L1J_m.img.icons.onload = check_finish;
+	L1J_m.img.icons_grey.src = "img/masteries_grey.png";
+	L1J_m.img.icons_grey.onload = check_finish;	
+	L1J_m.img.decoration.src = "img/decoration.png";
+	L1J_m.img.decoration.onload = check_finish;
 };
 /* end old masteries code */
 window.onload = function() { L1J.init(); masteries_init(); };
