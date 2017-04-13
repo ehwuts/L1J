@@ -102,7 +102,7 @@ var draw_layout = [[[[],[]],[[],[]],[[],[]],[[],[]],[[],[]],[[],[],[]]],[[[],[]]
 var default_init = "0000000000000000000000000000";
 
 var mdat, canvas, context;
-var icons = new Image(), icons_grey = new Image();
+var icons = new Image(), icons_grey = new Image(), decoration = new Image();
 var masteries;
 var s;
 var ss = 0;
@@ -156,7 +156,7 @@ function draw_cell(panel, row, col) {
 	context.drawImage(has?icons:icons_grey, 48*col + 144*panel, 48*row, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
 	context.drawImage(could?icons:icons_grey, 96, 0, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
 	if (row%2 == 0) {
-		context.drawImage(icons, 401, (has?32:(could?16:0)), 31, 16, draw_layout[panel][row][col][0]+20, draw_layout[panel][row][col][1]+38, 31, 16);
+		context.drawImage(decoration, 0, (has?80:(could?64:48)), 31, 16, draw_layout[panel][row][col][0]+20, draw_layout[panel][row][col][1]+38, 31, 16);
 		context.textAlign = "left";
 		context.font = "11px sans-serif";
 		context.fillStyle = (has?"#fe0":(could?"#08f":"#aaa"));
@@ -183,20 +183,6 @@ function draw_spent() {
 	context.fillText("Resolve: "+s[2], panel_width*5/2+4, offset2);
 }
 
-function update_transferals() {
-	queryDict.m = mdat.value;
-	
-	var data = [];
-	data.push("m="+queryDict.m);
-	if (typeof(queryDict.r) == "string") data.push("r="+queryDict.r);
-	if (typeof(queryDict.c) == "string") data.push("c="+queryDict.c);
-	
-	data = data.join("&");
-	
-	document.getElementById("mainref").href = "index.html?"+data;
-	document.getElementById("runeref").href = "runes.html?"+data;
-}
-
 function gen_code() {
 	var code = "";
 	
@@ -216,7 +202,6 @@ function gen_code() {
 		++panel;
 	}
 	mdat.value = code;
-	update_transferals();
 }
 
 function redraw_full() {
@@ -327,7 +312,7 @@ function initialize(input) {
 
 var load_src = 0;
 function check_finish(x) {
-	if (++load_src < 2) return;
+	if (++load_src < 3) return;
 	
 	canvas.onclick = function(e) { handle_click(true, e); return false; }
 	canvas.oncontextmenu = function(e) { handle_click(false, e); return false; }
@@ -361,6 +346,8 @@ function masteries_init() {
 	icons.onload = check_finish;
 	icons_grey.src = "img/masteries_grey.png";
 	icons_grey.onload = check_finish;	
+	decoration.src = "img/decoration.png";
+	decoration.onload = check_finish;
 };
 /* end old masteries code */
 window.onload = function() { L1J.init(); masteries_init(); };
