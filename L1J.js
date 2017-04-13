@@ -74,30 +74,10 @@ var queryDict = {};
 //TODO: DOn't redraw full thing each time
 //TODO: make load actually support partial adds
 
-// get_coords based on http://www.chestysoft.com/imagefile/javascript/get-coordinates.asp
-function get_coords(e, obj) {
-	"use strict";
-	var itemX = 0, itemY = 0, eventX = 0, eventY = 0;
-	
-	if (typeof(obj.offsetParent) === "undefined" || typeof(obj.offsetParent) === "null") {
-		itemX = obj.x;
-		itemY = obj.y;
-	} else do {
-		itemX += obj.offsetLeft;
-		itemY += obj.offsetTop;
-		obj = obj.offsetParent;
-	} while (obj);
-	
-	if (e.clientX || e.clientY) {
-		eventX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-		eventY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-	}
-	
-	return [eventX - itemX, eventY - itemY];
-}
-
 var masteries_json = '[[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}],[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}],[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}]]';
-var draw_layout = [[[[],[]],[[],[]],[[],[]],[[],[]],[[],[]],[[],[],[]]],[[[],[]],[[],[],[]],[[],[]],[[],[]],[[],[]],[[],[],[]]],[[[],[]],[[],[]],[[],[]],[[],[]],[[],[]],[[],[],[]]]];
+var draw_layout = [[[[],[]],[[],[],[]],[[],[]],[[],[],[]],[[],[]],[[],[],[]]],[[[],[]],[[],[],[]],[[],[]],[[],[],[]],[[],[]],[[],[],[]]],[[[],[]],[[],[],[]],[[],[]],[[],[],[]],[[],[]],[[],[],[]]]];
+
+masteries_data.tree2 = [masteries_data.tree.Ferocity, masteries_data.tree.Cunning, masteries_data.tree.Resolve];
 
 var default_init = "0000000000000000000000000000";
 
@@ -114,7 +94,7 @@ function setup_layout() {
 	var spare_height = canvas.height - 288;
 	spacing = Math.floor(spare_height / 9);
 	
-	var width_base = Math.floor((panel_width - 144)/3);
+	var width_base = Math.floor((panel_width - 144)/4);
 	
 	var t1 = [width_base, panel_width - 48 - width_base];
 	var t2 = [[Math.floor((panel_width - width_base) / 2) - 48, Math.floor((panel_width + width_base) / 2)],
@@ -153,7 +133,7 @@ function draw_cell(panel, row, col) {
 	var has = masteries[panel][row].m[col];
 	var could = masteries[panel][row].s||(ss < 30 && (row==0 || masteries[panel][row-1].s == masteries[panel][row-1].c));
 	
-	context.drawImage(has?icons:icons_grey, 48*col + 144*panel, 48*row, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
+	context.drawImage(has?icons:icons_grey, 48*col + 192*panel, 48*row, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
 	context.drawImage(decoration, has?0:48, 0, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
 	if (row%2 == 0) {
 		context.drawImage(decoration, 0, (has?80:(could?64:48)), 31, 16, draw_layout[panel][row][col][0]+20, draw_layout[panel][row][col][1]+38, 31, 16);
