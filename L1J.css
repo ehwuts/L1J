@@ -4,3 +4,5 @@ a.inactive { text-decoration: underline; cursor: pointer; }
 
 .hide { visibility: hidden; }
 .hide2 { display: none; }
+
+#marks, #seals, #glyphs, #quints { text-decoration: underline; }

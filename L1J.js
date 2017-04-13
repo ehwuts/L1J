@@ -46,7 +46,7 @@ L1J.init = function() {
 	L1J.ref.masteries_a.onclick = function () { L1J.switch_view("masteries"); };
 	L1J.ref.debug_a.onclick = function () { L1J.switch_view("debug"); };	
 	
-	L1J.switch_view("masteries");
+	L1J.switch_view("runes");
 }
 
 window.addEventListener("load", L1J.init);
