@@ -61,7 +61,7 @@ L1J_m.which_cell_is_here = function(loc) {
 	return false;
 }
 
-function draw_cell(panel, row, col) {
+L1J_m.draw_cell = function(panel, row, col) {
 	"use strict";
 	var has = L1J_m.masteries[panel][row].m[col];
 	var could = L1J_m.masteries[panel][row].s||(L1J_m.ss < 30 && (row==0 || L1J_m.masteries[panel][row-1].s == L1J_m.masteries[panel][row-1].c));
@@ -79,7 +79,7 @@ function draw_cell(panel, row, col) {
 	}
 }
 
-function draw_spent() {
+L1J_m.draw_spent = function() {
 	"use strict";
 	var offset = 288 + 7*L1J_m.spacing;
 	var offset2 = offset + (L1J_m.canvas.height - offset)/2;
@@ -99,7 +99,7 @@ function draw_spent() {
 	L1J_m.context.fillText("Resolve: "+L1J_m.s[2], L1J_m.panel_width*5/2+4, offset2);
 }
 
-function gen_code() {
+L1J_m.gen_code = function() {
 	"use strict";
 	var code = "";
 		
@@ -121,25 +121,25 @@ function gen_code() {
 	L1J_m.mdat.value = code;
 }
 
-function redraw_full() {
+L1J_m.redraw_full = function() {
 	var panel = 0;
 	while (panel < L1J_m.layout.length) {
 		var row = 0;
 		while (row < L1J_m.layout[panel].length) {
 			var col = 0;
 			while (col < L1J_m.layout[panel][row].length) {
-				draw_cell(panel, row, col);
+				L1J_m.draw_cell(panel, row, col);
 				++col;
 			}
 			++row;
 		}
 		++panel;
 	}
-	draw_spent();
-	gen_code();
+	L1J_m.draw_spent();
+	L1J_m.gen_code();
 }
 
-function add_m(panel, row, col) {
+L1J_m.add_m = function(panel, row, col) {
 	var has = L1J_m.masteries[panel][row].m[col];
 	var could = ((L1J_m.masteries[panel][row].s||(L1J_m.ss < 30 && (row==0 || L1J_m.masteries[panel][row-1].s == L1J_m.masteries[panel][row-1].c)))&&L1J_m.masteries[panel][row].m[col]!==undefined);
 	
@@ -170,10 +170,10 @@ function add_m(panel, row, col) {
 		}
 	}
 	
-	redraw_full();
+	L1J_m.redraw_full();
 }
 
-function dec_m(panel, row, col) {
+L1J_m.dec_m = function(panel, row, col) {
 	"use strict";
 	if (L1J_m.masteries[panel][row].m[col] && (row + 1 == L1J_m.masteries[panel].length || L1J_m.masteries[panel][row+1].s == 0)) {
 		--L1J_m.masteries[panel][row].m[col];
@@ -181,19 +181,19 @@ function dec_m(panel, row, col) {
 		--L1J_m.s[panel];
 		--L1J_m.masteries[panel][row].s;
 	}
-	redraw_full();
+	L1J_m.redraw_full();
 }
 
-function handle_click(left, e) {
+L1J_m.handle_click = function(left, e) {
 	"use strict";
 	var loc = L1J_m.which_cell_is_here(get_coords(e, L1J_m.canvas));
 	if (loc !== false) {
-		if (left) add_m(loc[0], loc[1], loc[2]);
-		else dec_m(loc[0], loc[1], loc[2]);
+		if (left) L1J_m.add_m(loc[0], loc[1], loc[2]);
+		else L1J_m.dec_m(loc[0], loc[1], loc[2]);
 	}
 }
 
-function initialize() {
+L1J_m.initialize = function() {
 	"use strict";
 	L1J_m.masteries = JSON.parse(L1J_m.masteries_json);
 	L1J_m.s = [0,0,0];
@@ -209,15 +209,15 @@ function initialize() {
 		var row = 0;
 		while (row < L1J_m.masteries[panel].length) {
 			if (row % 2) {
-				if (input[pos] != "0") add_m(panel,row,input[pos]-1);
+				if (input[pos] != "0") L1J_m.add_m(panel,row,input[pos]-1);
 				++pos;
 			} else {
 				if (input[pos] != "0") {
-					add_m(panel, row, 0);
+					L1J_m.add_m(panel, row, 0);
 				}
 				++pos;
 				if (input[pos] != "0") {
-					add_m(panel, row, 1);
+					L1J_m.add_m(panel, row, 1);
 				}
 				++pos;
 			}
@@ -226,7 +226,7 @@ function initialize() {
 		++panel;
 	}
  
-	redraw_full();
+	L1J_m.redraw_full();
 }
 
 L1J_m.define_layout = function() {
@@ -259,12 +259,12 @@ L1J_m.init_finish = function(x) {
 	"use strict";
 	if (++(L1J_m.img_loaded) < L1J_m.img.length) return;
 	
-	L1J_m.canvas.onclick = function(e) { handle_click(true, e); return false; }
-	L1J_m.canvas.contextmenu = function(e) { handle_click(false, e); return false; }
+	L1J_m.canvas.onclick = function(e) { L1J_m.handle_click(true, e); return false; }
+	L1J_m.canvas.contextmenu = function(e) { L1J_m.handle_click(false, e); return false; }
 	
-	document.getElementById("loadmastery").onclick = initialize;
-	gen_code();
-	initialize();
+	document.getElementById("loadmastery").onclick = L1J_m.initialize;
+	L1J_m.gen_code();
+	L1J_m.initialize();
 }
 
 L1J_m.init = function() {
