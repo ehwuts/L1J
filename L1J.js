@@ -154,7 +154,7 @@ function draw_cell(panel, row, col) {
 	var could = masteries[panel][row].s||(ss < 30 && (row==0 || masteries[panel][row-1].s == masteries[panel][row-1].c));
 	
 	context.drawImage(has?icons:icons_grey, 48*col + 144*panel, 48*row, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
-	context.drawImage(could?icons:icons_grey, 96, 0, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
+	context.drawImage(decoration, has?0:48, 0, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
 	if (row%2 == 0) {
 		context.drawImage(decoration, 0, (has?80:(could?64:48)), 31, 16, draw_layout[panel][row][col][0]+20, draw_layout[panel][row][col][1]+38, 31, 16);
 		context.textAlign = "left";
