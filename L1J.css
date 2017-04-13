@@ -1,0 +1,6 @@
+a { color: inherit; }
+a.current { text-decoration: none; }
+a.inactive { text-decoration: underline; cursor: pointer; }
+
+.hide { visibility: hidden; }
+.hide2 { display: none; }
