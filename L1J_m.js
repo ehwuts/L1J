@@ -260,7 +260,7 @@ L1J_m.init_finish = function(x) {
 	if (++(L1J_m.img_loaded) < L1J_m.img.length) return;
 	
 	L1J_m.canvas.onclick = function(e) { L1J_m.handle_click(true, e); return false; }
-	L1J_m.canvas.contextmenu = function(e) { L1J_m.handle_click(false, e); return false; }
+	L1J_m.canvas.oncontextmenu = function(e) { L1J_m.handle_click(false, e); return false; }
 	
 	document.getElementById("loadmastery").onclick = L1J_m.initialize;
 	L1J_m.gen_code();
