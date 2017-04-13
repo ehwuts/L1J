@@ -1,152 +1,134 @@
-var queryDict = {};
+L1J_r = {
+	"stats" : "",
+	"StatsObj" : "",
+	"runes" : JSON.parse(runes_json),
+	"red" : "", "blue" : "", "black" : "", "codeObj" : "",
+	"have" : {'red': [0,0,0,0,0,0,0,0,0], 'yellow': [0,0,0,0,0,0,0,0,0], 'blue': [0,0,0,0,0,0,0,0,0], 'black': [0,0,0]},
+	"haveref" : {'red': [], 'yellow': [], 'blue': [], 'black': []}
+};
 
-var stats;
-var statsObj;
-var runes = JSON.parse(runes_json);
-var red, yellow, blue, black, codeObj;
-var have = {'red': [0,0,0,0,0,0,0,0,0], 'yellow': [0,0,0,0,0,0,0,0,0], 'blue': [0,0,0,0,0,0,0,0,0], 'black': [0,0,0]};
-var haveref = {'red': [], 'yellow': [], 'blue': [], 'black': []};
-
-function update_transferals() {
-	queryDict.r = codeObj.textContent;
-	
-	var data = [];
-	if (typeof(queryDict.m) == "string") data.push("m="+queryDict.m);
-	data.push("r="+queryDict.r);	
-	if (typeof(queryDict.c) == "string") data.push("c="+queryDict.c);
-	
-	data = data.join("&");
-	
-}
-
-function do_filter(tag) {
+L1J_r.do_filter = function(tag) {
+	"use strict";
 	if (tag == 'all') {
-		for (i = 0; i < runes.index.length; i++) {
-			document.getElementById(runes.index[i]).className = "";
+		for (i = 0; i < L1J_r.runes.index.length; i++) {
+			document.getElementById(L1J_r.runes.index[i]).className = "";
 		}	
-	} else if (runes.tags[tag]) {
-		for (i = 0; i < runes.index.length; i++) {
-			document.getElementById(runes.index[i]).className = "hidden";
+	} else if (L1J_r.runes.tags[tag]) {
+		for (i = 0; i < L1J_r.runes.index.length; i++) {
+			document.getElementById(L1J_r.runes.index[i]).className = "hide2";
 		}
-		for (i = 0; i < runes.tags[tag].length; i++) {
-			document.getElementById(runes.tags[tag][i]).className = "";
+		for (i = 0; i < L1J_r.runes.tags[tag].length; i++) {
+			document.getElementById(L1J_r.runes.tags[tag][i]).className = "";
 		}
 	}
 }
 
-function toggle_visible(id) {
+L1J_r.toggle_visible = function(id) {
+	"use strict";
 	var obj = document.getElementById(id);
 	
-	if (obj.className == "hidden") obj.className = "";
-	else obj.className = "hidden";
+	if (obj.className == "hide2") obj.className = "";
+	else obj.className = "hide2";
 }
 
-function update_statlist() {
-	var code = have.red.join(",") + "," + have.yellow.join(",") + "," + have.blue.join(",") + "," + have.black.join(",");
+L1J_r.update_statlist = function() {
+	"use strict";
+	var code = L1J_r.have.red.join(",") + "," + L1J_r.have.yellow.join(",") + "," + L1J_r.have.blue.join(",") + "," + L1J_r.have.black.join(",");
 	
-	codeObj.textContent = code;
-	statsObj.innerHTML = '';
-	for (var attr in stats.stats) {
-		if (stats.stats[attr]) {
-			statsObj.innerHTML += attr + ': '+stats.stats[attr]+'<br>';
+	L1J_r.codeObj.textContent = code;
+	L1J_r.statsObj.innerHTML = '';
+	for (var attr in L1J_r.stats.stats) {
+		if (L1J_r.stats.stats[attr]) {
+			L1J_r.statsObj.innerHTML += attr + ': '+L1J_r.stats.stats[attr]+'<br>';
 		}
 	}
-	
-	update_transferals();
 }
 
-function add_rune(rune) {
-	if (runes.data[rune]) {
-		var type = runes.data[rune].type;
-		for (i = 0; i < have[type].length; ++i) {
-			if (have[type][i] == 0) {
-				have[type][i] = rune;
-				haveref[type][i].textContent = runes.data[rune].name;				
-				for (var attr in runes.data[rune].stats) {
-					stats.stats[attr] += runes.data[rune].stats[attr];
+L1J_r.add_rune = function(rune) {
+	"use strict";
+	if (L1J_r.runes.data[rune]) {
+		var type = L1J_r.runes.data[rune].type;
+		for (i = 0; i < L1J_r.have[type].length; ++i) {
+			if (L1J_r.have[type][i] == 0) {
+				L1J_r.have[type][i] = rune;
+				L1J_r.haveref[type][i].textContent = L1J_r.runes.data[rune].name;				
+				for (var attr in L1J_r.runes.data[rune].stats) {
+					L1J_r.stats.stats[attr] += L1J_r.runes.data[rune].stats[attr];
 				}
-				update_statlist();				
+				L1J_r.update_statlist();				
 				break;				
 			}
 		}
 	}
 }
 
-function remove_rune(element_id) {
+L1J_r.remove_rune = function(element_id) {
+	"use strict";
 	var parts = element_id.split("_");
 	var type = parts[0], id = parts[1];
-	if (have[type][id] != 0) {
-		for (var attr in runes.data[have[type][id]].stats) {
-			stats.stats[attr] -= runes.data[have[type][id]].stats[attr];
+	if (L1J_r.have[type][id] != 0) {
+		for (var attr in L1J_r.runes.data[L1J_r.have[type][id]].stats) {
+			L1J_r.stats.stats[attr] -= L1J_r.runes.data[L1J_r.have[type][id]].stats[attr];
 		}
-		have[type][id] = 0;
-		haveref[type][id].textContent = '';
+		L1J_r.have[type][id] = 0;
+		L1J_r.haveref[type][id].textContent = '';
 		update_statlist();
 	}
 }
 
-function populate_list(value, index, array) {
+L1J_r.populate_list = function(value, index, array) {
+	"use strict";
 	var e = document.createElement("span");
 	e.id = value;
-	e.innerHTML = runes.data[value].desc;
-	e.onclick = function() {add_rune(this.id); return false;};
+	e.innerHTML = L1J_r.runes.data[value].desc;
+	e.onclick = function() {L1J_r.add_rune(this.id); return false;};
 	var e2 = document.createElement("br");
 	e.appendChild(e2);
 	this.appendChild(e);
 }
 
-function runes_init() {
-	// this line by http://stackoverflow.com/users/985454/qwerty
-	location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});
+L1J_r.init = function () {
+	"use strict";
 	
-	stats = JSON.parse(stats_json);
-	red = document.getElementById('red');
-	yellow = document.getElementById('yellow');
-	blue = document.getElementById('blue');
-	black = document.getElementById('black');
-	statsObj = document.getElementById('statslist');
-	codeObj = document.getElementById('rdat');	
+	L1J_r.stats = JSON.parse(stats_json);
+	L1J_r.red = document.getElementById('red');
+	L1J_r.yellow = document.getElementById('yellow');
+	L1J_r.blue = document.getElementById('blue');
+	L1J_r.black = document.getElementById('black');
+	L1J_r.statsObj = document.getElementById('statslist');
+	L1J_r.codeObj = document.getElementById('rdat');
 		
-	document.getElementById('tag').onchange = function() {do_filter(this.value); return false;};
-	document.getElementById('marks').onclick = function() {toggle_visible('red'); return false;};
-	document.getElementById('seals').onclick = function() {toggle_visible('yellow'); return false;};
-	document.getElementById('glyphs').onclick = function() {toggle_visible('blue'); return false;};
-	document.getElementById('quints').onclick = function() {toggle_visible('black'); return false;};
+	document.getElementById('tag').onchange = function() {L1J_r.do_filter(this.value); return false;};
+	document.getElementById('marks').onclick = function() {L1J_r.toggle_visible('red'); return false;};
+	document.getElementById('seals').onclick = function() {L1J_r.toggle_visible('yellow'); return false;};
+	document.getElementById('glyphs').onclick = function() {L1J_r.toggle_visible('blue'); return false;};
+	document.getElementById('quints').onclick = function() {L1J_r.toggle_visible('black'); return false;};
 		
-	runes.runes.red.forEach(populate_list, red);
-	runes.runes.yellow.forEach(populate_list, yellow);
-	runes.runes.blue.forEach(populate_list, blue);
-	runes.runes.black.forEach(populate_list, black);
+	L1J_r.runes.runes.red.forEach(L1J_r.populate_list, L1J_r.red);
+	L1J_r.runes.runes.yellow.forEach(L1J_r.populate_list, L1J_r.yellow);
+	L1J_r.runes.runes.blue.forEach(L1J_r.populate_list, L1J_r.blue);
+	L1J_r.runes.runes.black.forEach(L1J_r.populate_list, L1J_r.black);
 	
-	for (i=0; i<runes.index.length; i++) {
-		t = runes.index[i];
-		document.getElementById(t).onclick = function() {add_rune(this.id); return false;};
+	for (i=0; i<L1J_r.runes.index.length; i++) {
+		t = L1J_r.runes.index[i];
+		document.getElementById(t).onclick = function() {L1J_r.add_rune(this.id); return false;};
 	}
-	for (i=0;i<have.red.length;i++) {
-		haveref.red[i] = document.getElementById('red_'+i);
-		haveref.red[i].onclick = function() {remove_rune(this.id); return false;};
+	for (i=0;i<L1J_r.have.red.length;i++) {
+		L1J_r.haveref.red[i] = document.getElementById('red_'+i);
+		L1J_r.haveref.red[i].onclick = function() {L1J_r.remove_rune(this.id); return false;};
 	}
-	for (i=0;i<have.yellow.length;i++) {
-		haveref.yellow[i] = document.getElementById('yellow_'+i);
-		haveref.yellow[i].onclick = function() {remove_rune(this.id); return false;};
+	for (i=0;i<L1J_r.have.yellow.length;i++) {
+		L1J_r.haveref.yellow[i] = document.getElementById('yellow_'+i);
+		L1J_r.haveref.yellow[i].onclick = function() {L1J_r.remove_rune(this.id); return false;};
 	}
-	for (i=0;i<have.blue.length;i++) {
-		haveref.blue[i] = document.getElementById('blue_'+i);
-		haveref.blue[i].onclick = function() {remove_rune(this.id); return false;};
+	for (i=0;i<L1J_r.have.blue.length;i++) {
+		L1J_r.haveref.blue[i] = document.getElementById('blue_'+i);
+		L1J_r.haveref.blue[i].onclick = function() {L1J_r.remove_rune(this.id); return false;};
 	}
-	for (i=0;i<have.black.length;i++) {
-		haveref.black[i] = document.getElementById('black_'+i);
-		haveref.black[i].onclick = function() {remove_rune(this.id); return false;};
+	for (i=0;i<L1J_r.have.black.length;i++) {
+		L1J_r.haveref.black[i] = document.getElementById('black_'+i);
+		L1J_r.haveref.black[i].onclick = function() {L1J_r.remove_rune(this.id); return false;};
 	}
-	
-	if (typeof(queryDict.r) == "string") {
-		var data = queryDict.r.split(",");
-		var i = 0;
-		while (i < data.length) {
-			add_rune(data[i]);
-			++i;
-		}
-	} else update_transferals();
 }
 
-window.addEventListener("load", runes_init);
+window.addEventListener("load", L1J_r.init);
