@@ -26,6 +26,7 @@ var L1J_m = {
 	"mdat" : "",
 	"canvas" : "",
 	"context" : "",
+	"mdesc" : "",
 	"img" : { "icons" : new Image(), "icons_grey" : new Image(), "decoration" : new Image() },
 	"img_loaded" : 0,
 	"colors" : { 
@@ -191,6 +192,11 @@ L1J_m.handle_click = function(left, e) {
 		if (left) L1J_m.add_m(loc[0], loc[1], loc[2]);
 		else L1J_m.dec_m(loc[0], loc[1], loc[2]);
 	}
+	
+	var id = L1J_m.tree2[loc[0]][loc[1]].masteryTreeItems[loc[2]].masteryId;
+	var rank = L1J_m.masteries[loc[0]][loc[1]].m[loc[2]];
+	
+	L1J_m.mdesc.innerHTML = masteries_data.data[id].name + "<br> Currently: " + (rank>0?masteries_data.data[id].sanitizedDescription[rank-1]:"nothing") + (rank<masteries_data.data[id].ranks?"<br> Next: "+masteries_data.data[id].sanitizedDescription[rank]:"");
 }
 
 L1J_m.initialize = function() {
@@ -270,7 +276,8 @@ L1J_m.init_finish = function(x) {
 L1J_m.init = function() {
 	"use strict";
 	
-	L1J_m.mdat = document.getElementById("mdat");	
+	L1J_m.mdat = document.getElementById("mdat");
+	L1J_m.mdesc = document.getElementById("mdesc");
 	L1J_m.canvas = document.getElementById("masteries_canvas");
 	L1J_m.context = L1J_m.canvas.getContext("2d");
 	L1J_m.panel_width = Math.floor((L1J_m.canvas.width - 4) / 3);
