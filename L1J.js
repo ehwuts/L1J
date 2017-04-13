@@ -292,9 +292,7 @@ function initialize(input) {
 			}
 			++panel;
 		}
-		queryDict.m = input;
 	} else {
-		queryDict.m = default_init;
 		redraw_full();
 	}
 }
@@ -306,8 +304,7 @@ function check_finish(x) {
 	canvas.onclick = function(e) { handle_click(true, e); return false; }
 	canvas.oncontextmenu = function(e) { handle_click(false, e); return false; }
 	
-	if (typeof(queryDict.m) == "string") initialize(queryDict.m);
-	else initialize(default_init);
+	initialize(default_init);
 	
 	document.getElementById("loadmastery").onclick = function() { initialize(mdat.value); };
 }
