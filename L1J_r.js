@@ -17,8 +17,6 @@ function update_transferals() {
 	
 	data = data.join("&");
 	
-	document.getElementById("mainref").href = "index.html?"+data;
-	document.getElementById("masteryref").href = "masteries.html?"+data;
 }
 
 function do_filter(tag) {
@@ -107,7 +105,7 @@ function runes_init() {
 	blue = document.getElementById('blue');
 	black = document.getElementById('black');
 	statsObj = document.getElementById('statslist');
-	codeObj = document.getElementById('code');	
+	codeObj = document.getElementById('rdat');	
 		
 	document.getElementById('tag').onchange = function() {do_filter(this.value); return false;};
 	document.getElementById('marks').onclick = function() {toggle_visible('red'); return false;};

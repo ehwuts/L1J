@@ -6,3 +6,4 @@ a.inactive { text-decoration: underline; cursor: pointer; }
 .hide2 { display: none; }
 
 #marks, #seals, #glyphs, #quints { text-decoration: underline; }
+td { vertical-align: top; }
