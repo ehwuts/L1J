@@ -74,10 +74,10 @@ var queryDict = {};
 //TODO: DOn't redraw full thing each time
 //TODO: make load actually support partial adds
 
-var masteries_json = '[[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}],[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}],[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}]]';
+var masteries_json = '[[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}],[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}],[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}]]';
 var draw_layout = [[[[],[]],[[],[],[]],[[],[]],[[],[],[]],[[],[]],[[],[],[]]],[[[],[]],[[],[],[]],[[],[]],[[],[],[]],[[],[]],[[],[],[]]],[[[],[]],[[],[],[]],[[],[]],[[],[],[]],[[],[]],[[],[],[]]]];
 
-masteries_data.tree2 = [masteries_data.tree.Ferocity, masteries_data.tree.Cunning, masteries_data.tree.Resolve];
+tree2 = [masteries_data.tree.Ferocity, masteries_data.tree.Cunning, masteries_data.tree.Resolve];
 
 var default_init = "0000000000000000000000000000";
 
@@ -133,7 +133,12 @@ function draw_cell(panel, row, col) {
 	var has = masteries[panel][row].m[col];
 	var could = masteries[panel][row].s||(ss < 30 && (row==0 || masteries[panel][row-1].s == masteries[panel][row-1].c));
 	
-	context.drawImage(has?icons:icons_grey, 48*col + 192*panel, 48*row, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
+	var id = (tree2[panel][row].masteryTreeItems[col].masteryId - 6000)+"";
+	
+	//01100100 11001000 100101100
+	//console.log(id);
+	
+	context.drawImage(has?icons:icons_grey, 48*(id.charAt(2)-1) + 192*(id.charAt(0)-1), 48*(id.charAt(1)-1), 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
 	context.drawImage(decoration, has?0:48, 0, 48, 48, draw_layout[panel][row][col][0], draw_layout[panel][row][col][1], 48, 48);
 	if (row%2 == 0) {
 		context.drawImage(decoration, 0, (has?80:(could?64:48)), 31, 16, draw_layout[panel][row][col][0]+20, draw_layout[panel][row][col][1]+38, 31, 16);
