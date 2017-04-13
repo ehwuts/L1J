@@ -268,9 +268,9 @@ function initialize(input) {
 		var pos = 0;
 		
 		var panel = 0;
-		while (panel < 3) {
+		while (panel < masteries.length) {
 			var row = 0;
-			while (row < 6) {
+			while (row < masteries[panel].length) {
 				if (row % 2) {
 					if (input[pos] != "0") add_m(panel,row,input[pos]-1);
 					++pos;
@@ -281,6 +281,10 @@ function initialize(input) {
 					++pos;
 					if (input[pos] != "0") {
 						add_m(panel, row, 1);
+					}
+					++pos;
+					if (input[pos] != "0") {
+						add_m(panel, row, 2);
 					}
 					++pos;
 				}
