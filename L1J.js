@@ -3,7 +3,8 @@ var L1J = {
 	"ref" : ""
 };
 
-L1J.switch_view = function(v) {
+L1J.switch_view = function(v) {	
+	"use strict";
 	if (v !== "main") {
 		L1J.ref.main_a.className = "inactive";
 		L1J.ref.main.className = "hide2";
@@ -28,6 +29,7 @@ L1J.switch_view = function(v) {
 }
 
 L1J.init = function() {
+	"use strict";
 	L1J.ref = {
 		"main_a" : document.getElementById("main_a"),
 		"runes_a" : document.getElementById("runes_a"),
@@ -101,6 +103,7 @@ var panel_width;
 
 
 function setup_layout() {
+	"use strict";
 	var spare_height = canvas.height - 288;
 	L1J_m.spacing = Math.floor(spare_height / 9);
 	
@@ -126,6 +129,7 @@ function setup_layout() {
 }
 
 function which_cell_is_here(loc) {
+	"use strict";
 	var panel = Math.floor(loc[0] / panel_width);
 	var row = Math.floor(loc[1] / (48 + L1J_m.spacing));
 	var col = 0;
@@ -140,6 +144,7 @@ function which_cell_is_here(loc) {
 }
 
 function draw_cell(panel, row, col) {
+	"use strict";
 	var has = masteries[panel][row].m[col];
 	var could = masteries[panel][row].s||(ss < 30 && (row==0 || masteries[panel][row-1].s == masteries[panel][row-1].c));
 	
@@ -159,7 +164,8 @@ function draw_cell(panel, row, col) {
 	}
 }
 
-function draw_spent() {	
+function draw_spent() {
+	"use strict";
 	var offset = 288 + 7*L1J_m.spacing;
 	var offset2 = offset + (canvas.height - offset)/2;
 	
@@ -179,6 +185,7 @@ function draw_spent() {
 }
 
 function gen_code() {
+	"use strict";
 	var code = "";
 	
 	var panel = 0;
@@ -252,6 +259,7 @@ function add_m(panel, row, col) {
 }
 
 function dec_m(panel, row, col) {
+	"use strict";
 	if (masteries[panel][row].m[col] && (row + 1 == masteries[panel].length || masteries[panel][row+1].s == 0)) {
 		--masteries[panel][row].m[col];
 		--ss;
@@ -262,6 +270,7 @@ function dec_m(panel, row, col) {
 }
 
 function handle_click(left, e) {
+	"use strict";
 	var loc = which_cell_is_here(get_coords(e, canvas));
 	if (loc !== false) {
 		if (left) add_m(loc[0], loc[1], loc[2]);
@@ -270,6 +279,7 @@ function handle_click(left, e) {
 }
 
 function initialize(input) {
+	"use strict";
 	masteries = JSON.parse(masteries_json);
 	s = [0,0,0];
 	ss = 0;
@@ -309,6 +319,7 @@ function initialize(input) {
 
 var load_src = 0;
 function check_finish(x) {
+	"use strict";
 	if (++load_src < 3) return;
 	
 	canvas.onclick = function(e) { handle_click(true, e); return false; }
@@ -320,6 +331,7 @@ function check_finish(x) {
 }
 
 function masteries_init() {
+	"use strict";
 	
 	mdat = document.getElementById("mdat");
 	canvas = document.getElementById("masteries_canvas");
