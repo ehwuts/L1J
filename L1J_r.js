@@ -3,6 +3,7 @@ L1J_r = {
 	"StatsObj" : "",
 	"runes" : JSON.parse(runes_json),
 	"red" : "", "blue" : "", "black" : "", "codeObj" : "",
+	"marks" : "", "seals" : "", "glyphs" : "", "quints" : "",
 	"have" : {'red': [0,0,0,0,0,0,0,0,0], 'yellow': [0,0,0,0,0,0,0,0,0], 'blue': [0,0,0,0,0,0,0,0,0], 'black': [0,0,0]},
 	"haveref" : {'red': [], 'yellow': [], 'blue': [], 'black': []}
 };
@@ -31,6 +32,24 @@ L1J_r.toggle_visible = function(id) {
 	else obj.className = "hide2";
 }
 
+L1J_r.switch_visible = function (id) {
+	"use strict";
+	
+	L1J_r[id].className = "";
+	if (id != "marks") {
+		L1J_r.marks.className = "hide2";
+	}
+	if (id != "seals") {
+		L1J_r.seals.className = "hide2";
+	}
+	if (id != "glyphs") {
+		L1J_r.glyphs.className = "hide2";
+	}
+	if (id != "quints") {
+		L1J_r.quints.className = "hide2";
+	}
+}
+
 L1J_r.update_statlist = function() {
 	"use strict";
 	var code = L1J_r.have.red.join(",") + "," + L1J_r.have.yellow.join(",") + "," + L1J_r.have.blue.join(",") + "," + L1J_r.have.black.join(",");
@@ -48,7 +67,7 @@ L1J_r.add_rune = function(rune) {
 	"use strict";
 	if (L1J_r.runes.data[rune]) {
 		var type = L1J_r.runes.data[rune].type;
-		for (i = 0; i < L1J_r.have[type].length; ++i) {
+		for (var i = 0; i < L1J_r.have[type].length; ++i) {
 			if (L1J_r.have[type][i] == 0) {
 				L1J_r.have[type][i] = rune;
 				L1J_r.haveref[type][i].textContent = L1J_r.runes.data[rune].name;				
@@ -97,20 +116,28 @@ L1J_r.init = function () {
 	L1J_r.black = document.getElementById('black');
 	L1J_r.statsObj = document.getElementById('statslist');
 	L1J_r.codeObj = document.getElementById('rdat');
+	
+	L1J_r.marks = document.getElementById('red');
+	L1J_r.seals = document.getElementById('yellow');
+	L1J_r.glyphs = document.getElementById('blue');
+	L1J_r.quints = document.getElementById('black');
 		
 	document.getElementById('tag').onchange = function() {L1J_r.do_filter(this.value); return false;};
-	document.getElementById('marks').onclick = function() {L1J_r.toggle_visible('red'); return false;};
-	document.getElementById('seals').onclick = function() {L1J_r.toggle_visible('yellow'); return false;};
-	document.getElementById('glyphs').onclick = function() {L1J_r.toggle_visible('blue'); return false;};
-	document.getElementById('quints').onclick = function() {L1J_r.toggle_visible('black'); return false;};
+	document.getElementById('marks').onclick = function() { L1J_r.switch_visible('marks'); return false; };
+	document.getElementById('seals').onclick = function() { L1J_r.switch_visible('seals'); return false; };
+	document.getElementById('glyphs').onclick = function() { L1J_r.switch_visible('glyphs'); return false; };
+	document.getElementById('quints').onclick = function() { L1J_r.switch_visible('quints'); return false; };
+	
+	L1J_r.switch_visible('marks');
 		
 	L1J_r.runes.runes.red.forEach(L1J_r.populate_list, L1J_r.red);
 	L1J_r.runes.runes.yellow.forEach(L1J_r.populate_list, L1J_r.yellow);
 	L1J_r.runes.runes.blue.forEach(L1J_r.populate_list, L1J_r.blue);
 	L1J_r.runes.runes.black.forEach(L1J_r.populate_list, L1J_r.black);
 	
+	var i;
 	for (i=0; i<L1J_r.runes.index.length; i++) {
-		t = L1J_r.runes.index[i];
+		var t = L1J_r.runes.index[i];
 		document.getElementById(t).onclick = function() {L1J_r.add_rune(this.id); return false;};
 	}
 	for (i=0;i<L1J_r.have.red.length;i++) {
