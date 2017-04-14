@@ -44,7 +44,8 @@ var L1J_m = {
 	"masteries_json" : '[[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}],[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}],[{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]},{"s":0,"c":5,"m":[0,0]},{"s":0,"c":1,"m":[0,0,0]}]]',
 	"tree2" : [masteries_data.tree.Ferocity, masteries_data.tree.Cunning, masteries_data.tree.Resolve],
 	"s" : [0,0,0],
-	"ss" : 0
+	"ss" : 0,
+	"mcount" : ""
 };
 
 L1J_m.which_cell_is_here = function(loc) {
@@ -138,6 +139,8 @@ L1J_m.redraw_full = function() {
 	}
 	L1J_m.draw_spent();
 	L1J_m.gen_code();
+	
+	L1J_m.mcount.innerHTML = L1J_m.s[0] + "/" + L1J_m.s[1] + "/" + L1J_m.s[2];
 }
 
 L1J_m.add_m = function(panel, row, col) {
@@ -191,12 +194,12 @@ L1J_m.handle_click = function(left, e) {
 	if (loc !== false) {
 		if (left) L1J_m.add_m(loc[0], loc[1], loc[2]);
 		else L1J_m.dec_m(loc[0], loc[1], loc[2]);
-	}
-	
-	var id = L1J_m.tree2[loc[0]][loc[1]].masteryTreeItems[loc[2]].masteryId;
-	var rank = L1J_m.masteries[loc[0]][loc[1]].m[loc[2]];
-	
-	L1J_m.mdesc.innerHTML = masteries_data.data[id].name + "<br> Currently: " + (rank>0?masteries_data.data[id].sanitizedDescription[rank-1]:"nothing") + (rank<masteries_data.data[id].ranks?"<br> Next: "+masteries_data.data[id].sanitizedDescription[rank]:"");
+		
+		var id = L1J_m.tree2[loc[0]][loc[1]].masteryTreeItems[loc[2]].masteryId;
+		var rank = L1J_m.masteries[loc[0]][loc[1]].m[loc[2]];
+		
+		L1J_m.mdesc.innerHTML = masteries_data.data[id].name + "<br> Currently: " + (rank>0?masteries_data.data[id].sanitizedDescription[rank-1]:"nothing") + (rank<masteries_data.data[id].ranks?"<br> Next: "+masteries_data.data[id].sanitizedDescription[rank]:"");
+	}	
 }
 
 L1J_m.initialize = function() {
@@ -275,6 +278,7 @@ L1J_m.init_finish = function(x) {
 
 L1J_m.init = function() {
 	"use strict";
+	L1J_m.mcount = document.getElementById("mcount");
 	
 	L1J_m.mdat = document.getElementById("mdat");
 	L1J_m.mdesc = document.getElementById("mdesc");
