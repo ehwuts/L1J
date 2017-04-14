@@ -38,7 +38,18 @@ L1J.init = function() {
 		"main" : document.getElementById("main"),
 		"runes" : document.getElementById("runes"),
 		"masteries" : document.getElementById("masteries"),
-		"debug" : document.getElementById("debug")
+		"debug" : document.getElementById("debug"),
+		"champsel" : document.getElementById("champion")
+	}
+	
+	var i = 0;
+	var keys = Object.keys(champions.data);
+	while (i < keys.length) {
+		var e = document.createElement("option");
+		e.text = champions.data[keys[i]].name;
+		e.value = keys[i];
+		L1J.ref.champsel.add(e);
+		++i;
 	}
 	
 	L1J.ref.main_a.onclick = function () { L1J.switch_view("main"); };
@@ -46,7 +57,7 @@ L1J.init = function() {
 	L1J.ref.masteries_a.onclick = function () { L1J.switch_view("masteries"); };
 	L1J.ref.debug_a.onclick = function () { L1J.switch_view("debug"); };	
 	
-	L1J.switch_view("runes");
+	L1J.switch_view("main");
 }
 
 window.addEventListener("load", L1J.init);

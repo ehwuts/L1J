@@ -10,7 +10,11 @@
 <noscript>This page is powered by javascript, so if you don't have javascript enabled nothing is gonna happen.</noscript>
 <a id="main_a" class="current">Main</a> | <a id="runes_a" class="inactive">Runes</a> | <a id="masteries_a" class="inactive">Masteries</a> | <a id="debug_a" class="inactive">Debug</a><br>
 <br>
-<div id="main">main div</div>
+<div id="main">
+<select id="champion"><option>----------</option></select><br>
+Runes: <span id="rcount">0/0/0/0</span><br>
+Masteries: <span id="mcount">0/0/0</span>
+</div>
 <!-- runes html begin -->
 <div id="runes" class="hide2">
 	<table>
@@ -63,6 +67,7 @@
 <script src="data/champions.js"></script>
 <script src="data/masteries.js"></script>
 <script src="data/runes.js"></script>
+<script src="data/items.js"></script>
 <script src="L1J.js"></script>
 <script src="L1J_m.js"></script>
 <script src="L1J_r.js"></script>

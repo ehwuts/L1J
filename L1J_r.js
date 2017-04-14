@@ -5,7 +5,8 @@ L1J_r = {
 	"red" : "", "blue" : "", "black" : "", "codeObj" : "",
 	"marks" : "", "seals" : "", "glyphs" : "", "quints" : "",
 	"have" : {'red': [0,0,0,0,0,0,0,0,0], 'yellow': [0,0,0,0,0,0,0,0,0], 'blue': [0,0,0,0,0,0,0,0,0], 'black': [0,0,0]},
-	"haveref" : {'red': [], 'yellow': [], 'blue': [], 'black': []}
+	"haveref" : {'red': [], 'yellow': [], 'blue': [], 'black': []},
+	"rcount" : ""
 };
 
 L1J_r.do_filter = function(tag) {
@@ -50,17 +51,67 @@ L1J_r.switch_visible = function (id) {
 	}
 }
 
-L1J_r.update_statlist = function() {
+L1J_r.recalc_stats = function() {
 	"use strict";
-	var code = L1J_r.have.red.join(",") + "," + L1J_r.have.yellow.join(",") + "," + L1J_r.have.blue.join(",") + "," + L1J_r.have.black.join(",");
-	
+	var code = L1J_r.have.red.join(",") + "," + L1J_r.have.yellow.join(",") + "," + L1J_r.have.blue.join(",") + "," + L1J_r.have.black.join(",");	
 	L1J_r.codeObj.textContent = code;
+	
+	for (var attr in L1J_r.stats.stats) {
+		L1J_r.stats.stats[attr] = 0;
+	}
+	var i = 0;
+	var a = 0;
+	while (i < L1J_r.have.red.length) {
+		if (L1J_r.have.red[i] != 0) {
+			++a;
+			for (var attr in L1J_r.runes.data[L1J_r.have.red[i]].stats) {
+				L1J_r.stats.stats[attr] += L1J_r.runes.data[L1J_r.have.red[i]].stats[attr];
+			}
+		}
+		++i;
+	}
+	i = 0;
+	var b = 0;
+	while (i < L1J_r.have.yellow.length) {
+		if (L1J_r.have.yellow[i] != 0) {
+			++b;
+			for (var attr in L1J_r.runes.data[L1J_r.have.yellow[i]].stats) {
+				L1J_r.stats.stats[attr] += L1J_r.runes.data[L1J_r.have.yellow[i]].stats[attr];
+			}
+		}
+		++i;
+	}
+	i = 0;
+	var c = 0;
+	while (i < L1J_r.have.blue.length) {
+		if (L1J_r.have.blue[i] != 0) {
+			++c;
+			for (var attr in L1J_r.runes.data[L1J_r.have.blue[i]].stats) {
+				L1J_r.stats.stats[attr] += L1J_r.runes.data[L1J_r.have.blue[i]].stats[attr];
+			}
+		}
+		++i;
+	}
+	i = 0;
+	var d = 0;
+	while (i < L1J_r.have.black.length) {
+		if (L1J_r.have.black[i] != 0) {
+			++d;
+			for (var attr in L1J_r.runes.data[L1J_r.have.black[i]].stats) {
+				L1J_r.stats.stats[attr] += L1J_r.runes.data[L1J_r.have.black[i]].stats[attr];
+			}
+		}
+		++i;
+	}
+	
 	L1J_r.statsObj.innerHTML = '';
 	for (var attr in L1J_r.stats.stats) {
 		if (L1J_r.stats.stats[attr]) {
 			L1J_r.statsObj.innerHTML += attr + ': '+L1J_r.stats.stats[attr]+'<br>';
 		}
 	}
+	
+	L1J_r.rcount.innerHTML = a + "/" + b + "/" + c + "/" + d;
 }
 
 L1J_r.add_rune = function(rune) {
@@ -70,11 +121,13 @@ L1J_r.add_rune = function(rune) {
 		for (var i = 0; i < L1J_r.have[type].length; ++i) {
 			if (L1J_r.have[type][i] == 0) {
 				L1J_r.have[type][i] = rune;
-				L1J_r.haveref[type][i].textContent = L1J_r.runes.data[rune].name;				
+				L1J_r.haveref[type][i].textContent = L1J_r.runes.data[rune].name;
+				/*
 				for (var attr in L1J_r.runes.data[rune].stats) {
 					L1J_r.stats.stats[attr] += L1J_r.runes.data[rune].stats[attr];
 				}
-				L1J_r.update_statlist();				
+				*/
+				L1J_r.recalc_stats();				
 				break;				
 			}
 		}
@@ -86,12 +139,14 @@ L1J_r.remove_rune = function(element_id) {
 	var parts = element_id.split("_");
 	var type = parts[0], id = parts[1];
 	if (L1J_r.have[type][id] != 0) {
+		/*
 		for (var attr in L1J_r.runes.data[L1J_r.have[type][id]].stats) {
 			L1J_r.stats.stats[attr] -= L1J_r.runes.data[L1J_r.have[type][id]].stats[attr];
 		}
+		*/
 		L1J_r.have[type][id] = 0;
 		L1J_r.haveref[type][id].textContent = '';
-		L1J_r.update_statlist();
+		L1J_r.recalc_stats();
 	}
 }
 
@@ -149,6 +204,8 @@ L1J_r.parse_runes = function() {
 
 L1J_r.init = function () {
 	"use strict";
+	L1J_r.rcount = document.getElementById("rcount");
+	
 	L1J_r.parse_runes();
 	
 	L1J_r.red = document.getElementById('red');
@@ -179,23 +236,23 @@ L1J_r.init = function () {
 	var i;
 	for (i=0; i<L1J_r.runes.index.length; i++) {
 		var t = L1J_r.runes.index[i];
-		document.getElementById(t).onclick = function() {L1J_r.add_rune(this.id); return false;};
+		document.getElementById(t).onclick = function() { L1J_r.add_rune(this.id); return false; };
 	}
 	for (i=0;i<L1J_r.have.red.length;i++) {
 		L1J_r.haveref.red[i] = document.getElementById('red_'+i);
-		L1J_r.haveref.red[i].onclick = function() {L1J_r.remove_rune(this.id); return false;};
+		L1J_r.haveref.red[i].onclick = function() { L1J_r.remove_rune(this.id); return false; };
 	}
 	for (i=0;i<L1J_r.have.yellow.length;i++) {
 		L1J_r.haveref.yellow[i] = document.getElementById('yellow_'+i);
-		L1J_r.haveref.yellow[i].onclick = function() {L1J_r.remove_rune(this.id); return false;};
+		L1J_r.haveref.yellow[i].onclick = function() { L1J_r.remove_rune(this.id); return false; };
 	}
 	for (i=0;i<L1J_r.have.blue.length;i++) {
 		L1J_r.haveref.blue[i] = document.getElementById('blue_'+i);
-		L1J_r.haveref.blue[i].onclick = function() {L1J_r.remove_rune(this.id); return false;};
+		L1J_r.haveref.blue[i].onclick = function() { L1J_r.remove_rune(this.id); return false; };
 	}
 	for (i=0;i<L1J_r.have.black.length;i++) {
 		L1J_r.haveref.black[i] = document.getElementById('black_'+i);
-		L1J_r.haveref.black[i].onclick = function() {L1J_r.remove_rune(this.id); return false;};
+		L1J_r.haveref.black[i].onclick = function() { L1J_r.remove_rune(this.id); return false; };
 	}
 }
 
