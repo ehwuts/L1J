@@ -1,7 +1,7 @@
 L1J_r = {
-	"stats" : "",
-	"StatsObj" : "",
-	"runes" : JSON.parse(runes_json),
+	"stats" : { "stats" : {} },
+	"statsObj" : "",
+	"runes" : "",
 	"red" : "", "blue" : "", "black" : "", "codeObj" : "",
 	"marks" : "", "seals" : "", "glyphs" : "", "quints" : "",
 	"have" : {'red': [0,0,0,0,0,0,0,0,0], 'yellow': [0,0,0,0,0,0,0,0,0], 'blue': [0,0,0,0,0,0,0,0,0], 'black': [0,0,0]},
@@ -66,7 +66,7 @@ L1J_r.update_statlist = function() {
 L1J_r.add_rune = function(rune) {
 	"use strict";
 	if (L1J_r.runes.data[rune]) {
-		var type = L1J_r.runes.data[rune].type;
+		var type = L1J_r.runes.data[rune].rune.type;
 		for (var i = 0; i < L1J_r.have[type].length; ++i) {
 			if (L1J_r.have[type][i] == 0) {
 				L1J_r.have[type][i] = rune;
@@ -91,7 +91,7 @@ L1J_r.remove_rune = function(element_id) {
 		}
 		L1J_r.have[type][id] = 0;
 		L1J_r.haveref[type][id].textContent = '';
-		update_statlist();
+		L1J_r.update_statlist();
 	}
 }
 
@@ -99,17 +99,58 @@ L1J_r.populate_list = function(value, index, array) {
 	"use strict";
 	var e = document.createElement("span");
 	e.id = value;
-	e.innerHTML = L1J_r.runes.data[value].desc;
+	e.innerHTML = L1J_r.runes.data[value].description;
 	e.onclick = function() {L1J_r.add_rune(this.id); return false;};
 	var e2 = document.createElement("br");
 	e.appendChild(e2);
 	this.appendChild(e);
 }
 
+L1J_r.parse_runes = function() {
+	//L1J_r.stats
+	L1J_r.runes = {
+		"data" : runes.data,
+		"index" : [], 
+		"runes" : {
+			"black" : [],
+			"blue" : [],
+			"red" : [],
+			"yellow" : []
+		},
+		"tags" : {}
+	};
+	var i = 0;
+	var keys = Object.keys(runes.data);
+	while (i < keys.length) {
+		if (runes.data[keys[i]].rune.tier == "3") {
+			L1J_r.runes.index.push(keys[i]);
+			L1J_r.runes.runes[runes.data[keys[i]].rune.type].push(keys[i]);
+			var k = 0;
+			while (k < runes.data[keys[i]].tags.length) {
+				if (L1J_r.runes.tags[runes.data[keys[i]].tags[k]] === undefined) {
+					L1J_r.runes.tags[runes.data[keys[i]].tags[k]] = [];
+				}
+				L1J_r.runes.tags[runes.data[keys[i]].tags[k]].push(keys[i]);
+				++k;
+			}
+			k = 0;
+			var stats = Object.keys(runes.data[keys[i]].stats);
+			while (k < stats.length) {
+				if (L1J_r.stats.stats[stats[k]] === undefined ) {
+					L1J_r.stats.stats[stats[k]] = 0;
+				}
+				++k;
+			}
+		}
+		
+		++i;
+	}
+};
+
 L1J_r.init = function () {
 	"use strict";
+	L1J_r.parse_runes();
 	
-	L1J_r.stats = JSON.parse(stats_json);
 	L1J_r.red = document.getElementById('red');
 	L1J_r.yellow = document.getElementById('yellow');
 	L1J_r.blue = document.getElementById('blue');
