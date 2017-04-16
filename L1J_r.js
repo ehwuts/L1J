@@ -11,6 +11,7 @@ L1J_r = {
 
 L1J_r.do_filter = function(tag) {
 	"use strict";
+	var i;
 	if (tag == 'all') {
 		for (i = 0; i < L1J_r.runes.index.length; i++) {
 			document.getElementById(L1J_r.runes.index[i]).className = "";
@@ -56,8 +57,8 @@ L1J_r.recalc_stats = function() {
 	var code = L1J_r.have.red.join(",") + "," + L1J_r.have.yellow.join(",") + "," + L1J_r.have.blue.join(",") + "," + L1J_r.have.black.join(",");	
 	L1J_r.codeObj.textContent = code;
 	
-	for (var attr in L1J_r.stats.stats) {
-		L1J_r.stats.stats[attr] = 0;
+	for (var attr in L1J_r.stats) {
+		L1J_r.stats[attr] = 0;
 	}
 	var i = 0;
 	var a = 0;
@@ -65,7 +66,7 @@ L1J_r.recalc_stats = function() {
 		if (L1J_r.have.red[i] != 0) {
 			++a;
 			for (var attr in L1J_r.runes.data[L1J_r.have.red[i]].stats) {
-				L1J_r.stats.stats[attr] += L1J_r.runes.data[L1J_r.have.red[i]].stats[attr];
+				L1J_r.stats[attr] += L1J_r.runes.data[L1J_r.have.red[i]].stats[attr];
 			}
 		}
 		++i;
@@ -76,7 +77,7 @@ L1J_r.recalc_stats = function() {
 		if (L1J_r.have.yellow[i] != 0) {
 			++b;
 			for (var attr in L1J_r.runes.data[L1J_r.have.yellow[i]].stats) {
-				L1J_r.stats.stats[attr] += L1J_r.runes.data[L1J_r.have.yellow[i]].stats[attr];
+				L1J_r.stats[attr] += L1J_r.runes.data[L1J_r.have.yellow[i]].stats[attr];
 			}
 		}
 		++i;
@@ -87,7 +88,7 @@ L1J_r.recalc_stats = function() {
 		if (L1J_r.have.blue[i] != 0) {
 			++c;
 			for (var attr in L1J_r.runes.data[L1J_r.have.blue[i]].stats) {
-				L1J_r.stats.stats[attr] += L1J_r.runes.data[L1J_r.have.blue[i]].stats[attr];
+				L1J_r.stats[attr] += L1J_r.runes.data[L1J_r.have.blue[i]].stats[attr];
 			}
 		}
 		++i;
@@ -98,16 +99,16 @@ L1J_r.recalc_stats = function() {
 		if (L1J_r.have.black[i] != 0) {
 			++d;
 			for (var attr in L1J_r.runes.data[L1J_r.have.black[i]].stats) {
-				L1J_r.stats.stats[attr] += L1J_r.runes.data[L1J_r.have.black[i]].stats[attr];
+				L1J_r.stats[attr] += L1J_r.runes.data[L1J_r.have.black[i]].stats[attr];
 			}
 		}
 		++i;
 	}
 	
 	L1J_r.statsObj.innerHTML = '';
-	for (var attr in L1J_r.stats.stats) {
-		if (L1J_r.stats.stats[attr]) {
-			L1J_r.statsObj.innerHTML += attr + ': '+L1J_r.stats.stats[attr]+'<br>';
+	for (var attr in L1J_r.stats) {
+		if (L1J_r.stats[attr]) {
+			L1J_r.statsObj.innerHTML += attr + ': '+L1J_r.stats[attr]+'<br>';
 		}
 	}
 	
@@ -124,7 +125,7 @@ L1J_r.add_rune = function(rune) {
 				L1J_r.haveref[type][i].textContent = L1J_r.runes.data[rune].name;
 				/*
 				for (var attr in L1J_r.runes.data[rune].stats) {
-					L1J_r.stats.stats[attr] += L1J_r.runes.data[rune].stats[attr];
+					L1J_r.stats[attr] += L1J_r.runes.data[rune].stats[attr];
 				}
 				*/
 				L1J_r.recalc_stats();				
@@ -141,7 +142,7 @@ L1J_r.remove_rune = function(element_id) {
 	if (L1J_r.have[type][id] != 0) {
 		/*
 		for (var attr in L1J_r.runes.data[L1J_r.have[type][id]].stats) {
-			L1J_r.stats.stats[attr] -= L1J_r.runes.data[L1J_r.have[type][id]].stats[attr];
+			L1J_r.stats[attr] -= L1J_r.runes.data[L1J_r.have[type][id]].stats[attr];
 		}
 		*/
 		L1J_r.have[type][id] = 0;
@@ -191,8 +192,8 @@ L1J_r.parse_runes = function() {
 			k = 0;
 			var stats = Object.keys(runes.data[keys[i]].stats);
 			while (k < stats.length) {
-				if (L1J_r.stats.stats[stats[k]] === undefined ) {
-					L1J_r.stats.stats[stats[k]] = 0;
+				if (L1J_r.stats[stats[k]] === undefined ) {
+					L1J_r.stats[stats[k]] = 0;
 				}
 				++k;
 			}

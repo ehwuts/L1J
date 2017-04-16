@@ -30,28 +30,28 @@ L1J.update_preview = function() {
 	L1J.stats.critmod = 2;
 	
 	/* begin runes inclusion */
-	L1J.stats.hp += L1J_r.stats.stats.FlatHPPoolMod + L1J.stats.level * L1J_r.stats.stats.rFlatHPModPerLevel;
-	L1J.stats.hpregen += L1J_r.stats.stats.FlatHPRegenMod + L1J.stats.level * L1J_r.stats.stats.rFlatHPRegenModPerLevel;
+	L1J.stats.hp += L1J_r.stats.FlatHPPoolMod + L1J.stats.level * L1J_r.stats.rFlatHPModPerLevel;
+	L1J.stats.hpregen += L1J_r.stats.FlatHPRegenMod + L1J.stats.level * L1J_r.stats.rFlatHPRegenModPerLevel;
 	if (L1J.stats.partype == "Mana") {
-		L1J.stats.mp += L1J_r.stats.stats.FlatMPPoolMod + L1J.stats.level * L1J_r.stats.stats.rFlatMPModPerLevel;
-		L1J.stats.mpregen += L1J_r.stats.stats.FlatMPRegenMod + L1J.stats.level * L1J_r.stats.stats.rFlatMPRegenModPerLevel;
+		L1J.stats.mp += L1J_r.stats.FlatMPPoolMod + L1J.stats.level * L1J_r.stats.rFlatMPModPerLevel;
+		L1J.stats.mpregen += L1J_r.stats.FlatMPRegenMod + L1J.stats.level * L1J_r.stats.rFlatMPRegenModPerLevel;
 	}
 	if (L1J.stats.partype == "Energy") {
-		L1J.stats.mp += L1J_r.stats.stats.FlatEnergyPoolMod + L1J.stats.level * L1J_r.stats.stats.rFlatEnergyModPerLevel;
-		L1J.stats.mpregen += L1J_r.stats.stats.FlatEnergyRegenMod + L1J.stats.level * L1J_r.stats.stats.rFlatEnergyRegenModPerLevel;
+		L1J.stats.mp += L1J_r.stats.FlatEnergyPoolMod + L1J.stats.level * L1J_r.stats.rFlatEnergyModPerLevel;
+		L1J.stats.mpregen += L1J_r.stats.FlatEnergyRegenMod + L1J.stats.level * L1J_r.stats.rFlatEnergyRegenModPerLevel;
 	}
-	L1J.stats.armor += L1J_r.stats.stats.FlatArmorMod + L1J.stats.level * L1J_r.stats.stats.rFlatArmorModPerLevel;
-	L1J.stats.spellblock += L1J_r.stats.stats.FlatSpellBlockMod + L1J.stats.level * L1J_r.stats.stats.rFlatSpellBlockModPerLevel;
-	L1J.stats.attackdamage += L1J_r.stats.stats.FlatPhysicalDamageMod + L1J.stats.level * L1J_r.stats.stats.rFlatPhysicalDamageModPerLevel;
-	L1J.stats.magicdamage += L1J_r.stats.stats.FlatMagicDamageMod + L1J.stats.level * L1J_r.stats.stats.rFlatMagicDamageModPerLevel;
-	L1J.stats.attackspeedbonus += L1J_r.stats.stats.PercentAttackSpeedMod;
-	L1J.stats.percentcooldown += L1J_r.stats.stats.rPercentCooldownMod + L1J.stats.level * L1J_r.stats.stats.rPercentCooldownModPerLevel;
-	L1J.stats.crit += L1J_r.stats.stats.FlatCritChanceMod;
-	L1J.stats.critmod += L1J_r.stats.stats.FlatCritDamageMod;
-	L1J.stats.lifesteal += L1J_r.stats.stats.PercentLifeStealMod;
-	L1J.stats.spellvamp += L1J_r.stats.stats.PercentSpellVampMod;
-	L1J.stats.flatmagicpenetration += L1J_r.stats.stats.rFlatMagicPenetrationMod;
-	L1J.stats.movespeed *= (1 + L1J_r.stats.stats.PercentMovementSpeedMod);
+	L1J.stats.armor += L1J_r.stats.FlatArmorMod + L1J.stats.level * L1J_r.stats.rFlatArmorModPerLevel;
+	L1J.stats.spellblock += L1J_r.stats.FlatSpellBlockMod + L1J.stats.level * L1J_r.stats.rFlatSpellBlockModPerLevel;
+	L1J.stats.attackdamage += L1J_r.stats.FlatPhysicalDamageMod + L1J.stats.level * L1J_r.stats.rFlatPhysicalDamageModPerLevel;
+	L1J.stats.magicdamage += L1J_r.stats.FlatMagicDamageMod + L1J.stats.level * L1J_r.stats.rFlatMagicDamageModPerLevel;
+	L1J.stats.attackspeedbonus += L1J_r.stats.PercentAttackSpeedMod;
+	L1J.stats.percentcooldown += L1J_r.stats.rPercentCooldownMod + L1J.stats.level * L1J_r.stats.rPercentCooldownModPerLevel;
+	L1J.stats.crit += L1J_r.stats.FlatCritChanceMod;
+	L1J.stats.critmod += L1J_r.stats.FlatCritDamageMod;
+	L1J.stats.lifesteal += L1J_r.stats.PercentLifeStealMod;
+	L1J.stats.spellvamp += L1J_r.stats.PercentSpellVampMod;
+	L1J.stats.flatmagicpenetration += L1J_r.stats.rFlatMagicPenetrationMod;
+	L1J.stats.movespeed *= (1 + L1J_r.stats.PercentMovementSpeedMod);
 	
 	//FlatHPPoolMod,rFlatHPModPerLevel,FlatHPRegenMod,rFlatHPRegenModPerLevel
 	//FlatMPPoolMod,rFlatMPModPerLevel,FlatMPRegenMod,rFlatMPRegenModPerLevel
