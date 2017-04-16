@@ -9,25 +9,27 @@ L1J.update_preview = function() {
 	L1J.stats = Object.assign({}, champions.data[L1J.ref.champsel.value].stats);
 	L1J.stats.level = 1;
 	L1J.stats.partype = champions.data[L1J.ref.champsel.value].partype;
-	L1J.stats.hp += L1J.stats.level * L1J.stats.hpperlevel;
-	L1J.stats.hpregen += L1J.stats.level * L1J.stats.hpregenperlevel;
-	L1J.stats.mp += L1J.stats.level * L1J.stats.mpperlevel;
-	L1J.stats.mpregen += L1J.stats.level * L1J.stats.mpregenperlevel;
+	/* begin base char stats */
+	L1J.stats.hp += (L1J.stats.level - 1) * L1J.stats.hpperlevel;
+	L1J.stats.hpregen += (L1J.stats.level - 1) * L1J.stats.hpregenperlevel;
+	L1J.stats.mp += (L1J.stats.level - 1) * L1J.stats.mpperlevel;
+	L1J.stats.mpregen += (L1J.stats.level - 1) * L1J.stats.mpregenperlevel;
 	L1J.stats.lethality = 0;
 	L1J.stats.percarmorpenetration = 0;
 	L1J.stats.flatmagicpenetration = 0;
 	L1J.stats.percmagicpenetration = 0;
 	L1J.stats.lifesteal = 0;
 	L1J.stats.spellvamp = 0;
-	L1J.stats.attackdamage += L1J.stats.level * L1J.stats.attackdamageperlevel;
+	L1J.stats.attackdamage += (L1J.stats.level - 1) * L1J.stats.attackdamageperlevel;
 	L1J.stats.magicdamage = 0;
-	L1J.stats.armor += L1J.stats.level * L1J.stats.armorperlevel;
-	L1J.stats.spellblock += L1J.stats.level * L1J.stats.spellblockperlevel;
+	L1J.stats.armor += (L1J.stats.level - 1) * L1J.stats.armorperlevel;
+	L1J.stats.spellblock += (L1J.stats.level - 1) * L1J.stats.spellblockperlevel;
 	L1J.stats.attackspeedbase = 0.625 / (1 + L1J.stats.attackspeedoffset);
 	L1J.stats.attackspeedbonus = (L1J.stats.level - 1) * L1J.stats.attackspeedperlevel / 100;
 	L1J.stats.percentcooldown = 0;
-	L1J.stats.crit += L1J.stats.level * L1J.stats.critperlevel;
+	L1J.stats.crit += (L1J.stats.level - 1) * L1J.stats.critperlevel;
 	L1J.stats.critmod = 2;
+	/* end base char stats */
 	
 	/* begin runes inclusion */
 	L1J.stats.hp += L1J_r.stats.FlatHPPoolMod + L1J.stats.level * L1J_r.stats.rFlatHPModPerLevel;
