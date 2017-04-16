@@ -8,9 +8,10 @@ L1J.update_preview = function() {
 	"use strict";
 	L1J.stats = Object.assign({}, champions.data[L1J.ref.champsel.value].stats);
 	L1J.stats.level = 1;
+	L1J.stats.partype = champions.data[L1J.ref.champsel.value].partype;
 	L1J.stats.hp += L1J.stats.level * L1J.stats.hpperlevel;
-	L1J.stats.mp += L1J.stats.level * L1J.stats.mpperlevel;
 	L1J.stats.hpregen += L1J.stats.level * L1J.stats.hpregenperlevel;
+	L1J.stats.mp += L1J.stats.level * L1J.stats.mpperlevel;
 	L1J.stats.mpregen += L1J.stats.level * L1J.stats.mpregenperlevel;
 	L1J.stats.lethality = 0;
 	L1J.stats.percarmorpenetration = 0;
@@ -24,16 +25,57 @@ L1J.update_preview = function() {
 	L1J.stats.spellblock += L1J.stats.level * L1J.stats.spellblockperlevel;
 	L1J.stats.attackspeedbase = 0.625 / (1 + L1J.stats.attackspeedoffset);
 	L1J.stats.attackspeedbonus = (L1J.stats.level - 1) * L1J.stats.attackspeedperlevel / 100;
-	L1J.stats.attackspeedeffective = L1J.stats.attackspeedbase * (1 + L1J.stats.attackspeedbonus);
 	L1J.stats.percentcooldown = 0;
 	L1J.stats.crit += L1J.stats.level * L1J.stats.critperlevel;
+	L1J.stats.critmod = 2;
+	
+	/* begin runes inclusion */
+	L1J.stats.hp += L1J_r.stats.stats.FlatHPPoolMod + L1J.stats.level * L1J_r.stats.stats.rFlatHPModPerLevel;
+	L1J.stats.hpregen += L1J_r.stats.stats.FlatHPRegenMod + L1J.stats.level * L1J_r.stats.stats.rFlatHPRegenModPerLevel;
+	if (L1J.stats.partype == "Mana") {
+		L1J.stats.mp += L1J_r.stats.stats.FlatMPPoolMod + L1J.stats.level * L1J_r.stats.stats.rFlatMPModPerLevel;
+		L1J.stats.mpregen += L1J_r.stats.stats.FlatMPRegenMod + L1J.stats.level * L1J_r.stats.stats.rFlatMPRegenModPerLevel;
+	}
+	if (L1J.stats.partype == "Energy") {
+		L1J.stats.mp += L1J_r.stats.stats.FlatEnergyPoolMod + L1J.stats.level * L1J_r.stats.stats.rFlatEnergyModPerLevel;
+		L1J.stats.mpregen += L1J_r.stats.stats.FlatEnergyRegenMod + L1J.stats.level * L1J_r.stats.stats.rFlatEnergyRegenModPerLevel;
+	}
+	L1J.stats.armor += L1J_r.stats.stats.FlatArmorMod + L1J.stats.level * L1J_r.stats.stats.rFlatArmorModPerLevel;
+	L1J.stats.spellblock += L1J_r.stats.stats.FlatSpellBlockMod + L1J.stats.level * L1J_r.stats.stats.rFlatSpellBlockModPerLevel;
+	L1J.stats.attackdamage += L1J_r.stats.stats.FlatPhysicalDamageMod + L1J.stats.level * L1J_r.stats.stats.rFlatPhysicalDamageModPerLevel;
+	L1J.stats.magicdamage += L1J_r.stats.stats.FlatMagicDamageMod + L1J.stats.level * L1J_r.stats.stats.rFlatMagicDamageModPerLevel;
+	L1J.stats.attackspeedbonus += L1J_r.stats.stats.PercentAttackSpeedMod;
+	L1J.stats.percentcooldown += L1J_r.stats.stats.rPercentCooldownMod + L1J.stats.level * L1J_r.stats.stats.rPercentCooldownModPerLevel;
+	L1J.stats.crit += L1J_r.stats.stats.FlatCritChanceMod;
+	L1J.stats.critmod += L1J_r.stats.stats.FlatCritDamageMod;
+	L1J.stats.lifesteal += L1J_r.stats.stats.PercentLifeStealMod;
+	L1J.stats.spellvamp += L1J_r.stats.stats.PercentSpellVampMod;
+	L1J.stats.flatmagicpenetration += L1J_r.stats.stats.rFlatMagicPenetrationMod;
+	L1J.stats.movespeed *= (1 + L1J_r.stats.stats.PercentMovementSpeedMod);
+	
+	//FlatHPPoolMod,rFlatHPModPerLevel,FlatHPRegenMod,rFlatHPRegenModPerLevel
+	//FlatMPPoolMod,rFlatMPModPerLevel,FlatMPRegenMod,rFlatMPRegenModPerLevel
+	//FlatEnergyPoolMod,rFlatEnergyModPerLevel,FlatEnergyRegenMod,rFlatEnergyRegenModPerLevel
+	//FlatArmorMod,rFlatArmorModPerLevel,FlatSpellBlockMod,rFlatSpellBlockModPerLevel
+	//FlatPhysicalDamageMod,rFlatPhysicalDamageModPerLevel,FlatMagicDamageMod,rFlatMagicDamageModPerLevel
+	//PercentAttackSpeedMod,rPercentCooldownMod,rPercentCooldownModPerLevel
+	//FlatCritChanceMod,FlatCritDamageMod,PercentLifeStealMod,PercentSpellVampMod,rFlatMagicPenetrationMod
+	
+	//below runes not yet added
+	//,PercentHPPoolMod,rFlatGoldPer10Mod,PercentEXPBonus,rPercentTimeDeadMod	
+	/* end runes inclusion */
+	
+	/* hard and soft stat caps */
+	L1J.stats.movespeed = Math.max(0, L1J.stats.movespeed - 490) * 0.5 + Math.max(0, Math.min(490, L1J.stats.movespeed) - 415) * 0.8 + Math.min(415, L1J.stats.movespeed);
+	L1J.stats.percentcooldown = Math.max(-0.4, L1J.stats.percentcooldown);
+	L1J.stats.attackspeedeffective = Math.min(2.50,L1J.stats.attackspeedbase * (1 + L1J.stats.attackspeedbonus));
 	
 	L1J.ref.preview.innerHTML = "HP " + L1J.stats.hp.toFixed(2) + " | MP " + L1J.stats.mp.toFixed(2) + "<br>" 
 		+ "HPR "  + L1J.stats.hpregen.toFixed(2) + " |  MPR " + L1J.stats.mpregen.toFixed(2) + "<br>"
 		+ "ARP " + L1J.stats.lethality + "/" + L1J.stats.percarmorpenetration.toFixed(2) + " | MPN " + L1J.stats.flatmagicpenetration + "/" + L1J.stats.percmagicpenetration.toFixed(2) + "<br>"
 		+ "LS " + L1J.stats.lifesteal + " | SV " + L1J.stats.spellvamp + "<br>"
 		+ "AD " + L1J.stats.attackdamage.toFixed(2) + " | AP " + L1J.stats.magicdamage.toFixed(2) + "<br>"
-		+ "AR " + L1J.stats.armor.toFixed(2) + " | MR " + L1J.stats.spellblock + "<br>"
+		+ "AR " + L1J.stats.armor.toFixed(2) + " | MR " + L1J.stats.spellblock.toFixed(2) + "<br>"
 		+ "AS " + L1J.stats.attackspeedeffective.toFixed(4) + " | CDR " + L1J.stats.percentcooldown.toFixed(2) + "<br>"
 		+ "Crit " + L1J.stats.crit + " | MS " + L1J.stats.movespeed + "<br>";
 }
