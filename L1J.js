@@ -12,6 +12,7 @@ L1J.update_preview = function() {
 	/* begin base char stats */
 	L1J.stats.hp += (L1J.stats.level - 1) * L1J.stats.hpperlevel;
 	L1J.stats.hpregen += (L1J.stats.level - 1) * L1J.stats.hpregenperlevel;
+	L1J.stats.bonushpregen = 0;
 	L1J.stats.mp += (L1J.stats.level - 1) * L1J.stats.mpperlevel;
 	L1J.stats.mpregen += (L1J.stats.level - 1) * L1J.stats.mpregenperlevel;
 	L1J.stats.lethality = 0;
@@ -23,7 +24,9 @@ L1J.update_preview = function() {
 	L1J.stats.attackdamage += (L1J.stats.level - 1) * L1J.stats.attackdamageperlevel;
 	L1J.stats.magicdamage = 0;
 	L1J.stats.armor += (L1J.stats.level - 1) * L1J.stats.armorperlevel;
+	L1J.stats.bonusarmor = 0;
 	L1J.stats.spellblock += (L1J.stats.level - 1) * L1J.stats.spellblockperlevel;
+	L1J.stats.bonusspellblock = 0;
 	L1J.stats.attackspeedbase = 0.625 / (1 + L1J.stats.attackspeedoffset);
 	L1J.stats.attackspeedbonus = (L1J.stats.level - 1) * L1J.stats.attackspeedperlevel / 100;
 	L1J.stats.percentcooldown = 0;
@@ -33,7 +36,7 @@ L1J.update_preview = function() {
 	
 	/* begin runes inclusion */
 	L1J.stats.hp += L1J_r.stats.FlatHPPoolMod + L1J.stats.level * L1J_r.stats.rFlatHPModPerLevel;
-	L1J.stats.hpregen += L1J_r.stats.FlatHPRegenMod + L1J.stats.level * L1J_r.stats.rFlatHPRegenModPerLevel;
+	L1J.stats.bonushpregen += L1J_r.stats.FlatHPRegenMod + L1J.stats.level * L1J_r.stats.rFlatHPRegenModPerLevel;
 	if (L1J.stats.partype == "Mana") {
 		L1J.stats.mp += L1J_r.stats.FlatMPPoolMod + L1J.stats.level * L1J_r.stats.rFlatMPModPerLevel;
 		L1J.stats.mpregen += L1J_r.stats.FlatMPRegenMod + L1J.stats.level * L1J_r.stats.rFlatMPRegenModPerLevel;
@@ -42,8 +45,8 @@ L1J.update_preview = function() {
 		L1J.stats.mp += L1J_r.stats.FlatEnergyPoolMod + L1J.stats.level * L1J_r.stats.rFlatEnergyModPerLevel;
 		L1J.stats.mpregen += L1J_r.stats.FlatEnergyRegenMod + L1J.stats.level * L1J_r.stats.rFlatEnergyRegenModPerLevel;
 	}
-	L1J.stats.armor += L1J_r.stats.FlatArmorMod + L1J.stats.level * L1J_r.stats.rFlatArmorModPerLevel;
-	L1J.stats.spellblock += L1J_r.stats.FlatSpellBlockMod + L1J.stats.level * L1J_r.stats.rFlatSpellBlockModPerLevel;
+	L1J.stats.bonusarmor += L1J_r.stats.FlatArmorMod + L1J.stats.level * L1J_r.stats.rFlatArmorModPerLevel;
+	L1J.stats.bonusspellblock += L1J_r.stats.FlatSpellBlockMod + L1J.stats.level * L1J_r.stats.rFlatSpellBlockModPerLevel;
 	L1J.stats.attackdamage += L1J_r.stats.FlatPhysicalDamageMod + L1J.stats.level * L1J_r.stats.rFlatPhysicalDamageModPerLevel;
 	L1J.stats.magicdamage += L1J_r.stats.FlatMagicDamageMod + L1J.stats.level * L1J_r.stats.rFlatMagicDamageModPerLevel;
 	L1J.stats.attackspeedbonus += L1J_r.stats.PercentAttackSpeedMod;
@@ -67,9 +70,36 @@ L1J.update_preview = function() {
 	//,PercentHPPoolMod,rFlatGoldPer10Mod,PercentEXPBonus,rPercentTimeDeadMod	
 	/* end runes inclusion */
 	
+	/* begin simple mastery stat inclusion */	
+	
+	L1J.stats.attackdamage += (0.4 + 0.09 * L1J.stats.level) * L1J_m.masteries[0][2].m[1]; //natural talent
+	L1J.stats.magicdamage += (0.6 + 0.13 * L1J.stats.level) * L1J_m.masteries[0][2].m[1]; //natural talent
+	L1J.stats.attackspeedbonus += 0.008 * L1J_m.masteries[0][0].m[0]; //fury
+	L1J.stats.lifesteal += 0.004 * L1J_m.masteries[0][2].m[0]; //vampirism
+	L1J.stats.spellvamp += 0.004 * L1J_m.masteries[0][2].m[0]; //vampirism
+	L1J.stats.percarmorpenetration += 0.014 * L1J_m.masteries[0][4].m[0]; //battering blows
+	L1J.stats.percmagicpenetration += 0.014 * L1J_m.masteries[0][4].m[1]; //piercing thoughts
+	
+	L1J.stats.flatmagicpenetration += (0.3 + 0.05 * L1J.stats.level) * L1J_m.masteries[1][4].m[0]; //Precision
+	L1J.stats.lethality += 1.2 * L1J_m.masteries[1][4].m[0]; //Precision
+	L1J.stats.percentcooldown -= 0.01 * L1J_m.masteries[1][4].m[1]; //Intelligence
+	
+	L1J.stats.bonushpregen += 0.4 * L1J_m.masteries[2][0].m[0]; // ?Recovery
+	L1J.stats.bonusarmor *= (1.0 + 0.01 * L1J_m.masteries[2][0].m[1]); //Unyielding
+	L1J.stats.spellblock *= (1.0 + 0.01 * L1J_m.masteries[2][0].m[1]); //Unyielding
+	L1J.stats.hpregen *= (1.0 + 0.016 * L1J_m.masteries[2][2].m[0]); // ?Runic Armor
+	L1J.stats.hp += 10 * L1J_m.masteries[2][2].m[1]; // Veteran's Scars
+	if (L1J_m.masteries[2][3].m[1] == 1) L1J.stats.hpregen *= 1.5; // ?Perseverance
+	
+	/* end simple mastery stat inclusion */
+	
+	L1J.stats.armor += L1J.stats.bonusarmor;
+	L1J.stats.spellblock += L1J.stats.bonusspellblock;
+	L1J.stats.hpregen += L1J.stats.bonushpregen;
+	
 	/* hard and soft stat caps */
 	L1J.stats.movespeed = Math.max(0, L1J.stats.movespeed - 490) * 0.5 + Math.max(0, Math.min(490, L1J.stats.movespeed) - 415) * 0.8 + Math.min(415, L1J.stats.movespeed);
-	L1J.stats.percentcooldown = Math.max(-0.4, L1J.stats.percentcooldown);
+	L1J.stats.percentcooldown = Math.max(-0.4 - 0.01 * L1J_m.masteries[1][4].m[1], L1J.stats.percentcooldown);
 	L1J.stats.attackspeedeffective = Math.min(2.50,L1J.stats.attackspeedbase * (1 + L1J.stats.attackspeedbonus));
 	
 	L1J.ref.preview.innerHTML = "HP " + L1J.stats.hp.toFixed(2) + " | MP " + L1J.stats.mp.toFixed(2) + "<br>" 
