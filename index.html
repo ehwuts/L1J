@@ -16,7 +16,8 @@
 <td>
 <select id="champion"><option>----------</option></select><br>
 Runes: <span id="rcount">0/0/0/0</span><br>
-Masteries: <span id="mcount">0/0/0</span>
+Masteries: <span id="mcount">0/0/0</span><br>
+Level: <select id="clevel"></select>
 </td>
 <td id="stats_preview"></td>
 <td id="combat_log"></td>
@@ -69,7 +70,11 @@ Masteries: <span id="mcount">0/0/0</span>
 <span id="mdesc"></span>
 </div>
 <!-- masteries html end -->
-<div id="debug" class="hide2">debug div<div id="debug_champ"></div><div id="debug_r"></div><div id="debug_m"></div></div>
+<div id="debug" class="hide2">
+Todo:<br>
+specialcase rune effects missing from api like lethality
+same but with items
+<div id="debug_champ"></div><div id="debug_r"></div><div id="debug_m"></div></div>
 <br>
 <div id="disclaimer">[*] {This Application} isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</div>
 <script src="data/champions.js"></script>

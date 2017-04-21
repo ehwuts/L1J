@@ -7,7 +7,7 @@ var L1J = {
 L1J.update_preview = function() {
 	"use strict";
 	L1J.stats = Object.assign({}, champions.data[L1J.ref.champsel.value].stats);
-	L1J.stats.level = 1;
+	L1J.stats.level = L1J.ref.level.value;
 	L1J.stats.partype = champions.data[L1J.ref.champsel.value].partype;
 	/* begin base char stats */
 	L1J.stats.hp += (L1J.stats.level - 1) * L1J.stats.hpperlevel;
@@ -119,7 +119,8 @@ L1J.init = function() {
 		"masteries" : document.getElementById("masteries"),
 		"debug" : document.getElementById("debug"),
 		"champsel" : document.getElementById("champion"),
-		"preview" : document.getElementById("stats_preview")
+		"preview" : document.getElementById("stats_preview"),
+		"level" : document.getElementById("clevel")
 	}
 	
 	var i = 0;
@@ -131,12 +132,21 @@ L1J.init = function() {
 		L1J.ref.champsel.add(e);
 		++i;
 	}
+	i = 1;
+	while (i <= 18) {
+		var e = document.createElement("option");
+		e.text = i;
+		e.value = i;
+		L1J.ref.level.add(e);
+		++i;
+	}
 	
 	L1J.ref.main_a.onclick = function () { L1J.switch_view("main"); };
 	L1J.ref.runes_a.onclick = function () { L1J.switch_view("runes"); };
 	L1J.ref.masteries_a.onclick = function () { L1J.switch_view("masteries"); };
 	L1J.ref.debug_a.onclick = function () { L1J.switch_view("debug"); };	
 	L1J.ref.champsel.onchange = L1J.update_preview;
+	L1J.ref.level.onchange = L1J.update_preview;
 	
 	L1J.switch_view("main");
 }
