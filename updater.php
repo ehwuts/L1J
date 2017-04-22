@@ -10,5 +10,5 @@ $masteries = 'https://global.api.riotgames.com/api/lol/static-data/NA/v1.2/maste
 // var runes =
 $runes = 'https://global.api.riotgames.com/api/lol/static-data/NA/v1.2/rune?runeListData=stats,tags&api_key='.$key;
 // var items =
-$runes = 'https://global.api.riotgames.com/api/lol/static-data/NA/v1.2/item?itemListData=all&api_key='.$key;
+$items = 'https://global.api.riotgames.com/api/lol/static-data/NA/v1.2/item?itemListData=all&api_key='.$key;
 ?>
