@@ -6,8 +6,58 @@ L1J_r = {
 	"marks" : "", "seals" : "", "glyphs" : "", "quints" : "",
 	"have" : {'red': [0,0,0,0,0,0,0,0,0], 'yellow': [0,0,0,0,0,0,0,0,0], 'blue': [0,0,0,0,0,0,0,0,0], 'black': [0,0,0]},
 	"haveref" : {'red': [], 'yellow': [], 'blue': [], 'black': []},
-	"rcount" : ""
+	"rcount" : "",
+	"descriptions" : ""
 };
+L1J_r.descriptions = {
+	"FlatArmorMod" : { "desc" : "Armor", "percent" : false, "scaling" : false },
+	"FlatCritChanceMod" : { "desc" : "Crit Chance", "percent" : true, "scaling" : false },
+	"FlatCritDamageMod" : { "desc" : "Critical Damage", "percent" : true, "scaling" : false },
+	"FlatEnergyPoolMod" : { "desc" : "Energy", "percent" : false, "scaling" : false },
+	"FlatEnergyRegenMod" : { "desc" : "Energy Regen", "percent" : false, "scaling" : false },
+	"FlatHPPoolMod" : { "desc" : "Health", "percent" : false, "scaling" : false },
+	"FlatHPRegenMod" : { "desc" : "Health Regen", "percent" : false, "scaling" : false },
+	"FlatMPPoolMod" : { "desc" : "Mana", "percent" : false, "scaling" : false },
+	"FlatMPRegenMod" : { "desc" : "Mana Regen", "percent" : false, "scaling" : false },
+	"FlatMagicDamageMod" : { "desc" : "Ability Power", "percent" : false, "scaling" : false },
+	"FlatPhysicalDamageMod" : { "desc" : "Attack Damage", "percent" : false, "scaling" : false },
+	"FlatSpellBlockMod" : { "desc" : "Magic Resist", "percent" : false, "scaling" : false },
+	"PercentAttackSpeedMod" : { "desc" : "Attack Speed", "percent" : true, "scaling" : false },
+	"PercentEXPBonus" : { "desc" : "Experience", "percent" : true, "scaling" : false },
+	"PercentHPPoolMod" : { "desc" : "Percent Health", "percent" : true, "scaling" : false },
+	"PercentLifestealMod" : { "desc" : "Life Steal", "percent" : true, "scaling" : false },
+	"PercentMovementSpeedMod" : { "desc" : "Movement Speed", "percent" : true, "scaling" : false },
+	"PercentSpellvampMod" : { "desc" : "Spell Vamp", "percent" : true, "scaling" : false },
+	"rFlatArmorModPerLevel" : { "desc" : "Armor per level", "percent" : false, "scaling" : true },
+	"rFlatEnergyModPerLevel" : { "desc" : "Energy at lvl 18", "percent" : false, "scaling" : true },
+	"rFlatEnergyRegenModPerLevel" : { "desc" : "Energy Regen at lvl 18", "percent" : false, "scaling" : true },
+	"rFlatGoldPer10Mod" : { "desc" : "Gold / 10 sec.", "percent" : false, "scaling" : false },
+	"rFlatHPModPerLevel" : { "desc" : "Health at lvl 18", "percent" : false, "scaling" : true },
+	"rFlatHPRegenModPerLevel" : { "desc" : "Health Regen at lvl 18", "percent" : false, "scaling" : true },
+	"rFlatMPModPerLevel" : { "desc" : "Mana at lvl 18", "percent" : false, "scaling" : true },
+	"rFlatMPRegenModPerLevel" : { "desc" : "Scalng Mana Regen", "percent" : false, "scaling" : true },
+	"rFlatMagicDamageModPerLevel" : { "desc" : "Ability Power at lvl 18", "percent" : false, "scaling" : true },
+	"rFlatMagicPenetrationMod" : { "desc" : "Magic Penetration", "percent" : false, "scaling" : false },
+	"rFlatPhysicalDamageModPerLevel" : { "desc" : "Attack Damage at lvl 18", "percent" : false, "scaling" : true },
+	"rFlatSpellBlockModPerLevel" : { "desc" : "Magic Resist at lvl 18", "percent" : false, "scaling" : true },
+	"rPercentCooldownMod" : { "desc" : "Cooldown Reduction", "percent" : true, "scaling" : false },
+	"rPercentCooldownModPerLevel" : { "desc" : "Cooldown Reduction at lvl 18", "percent" : true, "scaling" : true },
+	"rPercentTimeDead" : { "desc" : "Time Dead",  "percent" : true, "scaling" : false }
+};
+
+L1J_r.describe = function(a, v) {
+	var result;
+	if (L1J_r.descriptions[a] === undefined) result = L1J_r.stats[a] + " " + a;
+	else {
+		if (L1J_r.descriptions[a].scaling) v = (18.0 * v).toFixed(2);
+		if (L1J_r.descriptions[a].percent) v = (100.0 * v).toFixed(2) + "%";
+		else v = v.toFixed(2);
+		if (v > 0) v = "+" + v;
+		
+		result = v + " " + L1J_r.descriptions[a].desc;
+	}
+	return result;
+}
 
 L1J_r.do_filter = function(tag) {
 	"use strict";
@@ -108,7 +158,7 @@ L1J_r.recalc_stats = function() {
 	L1J_r.statsObj.innerHTML = '';
 	for (var attr in L1J_r.stats) {
 		if (L1J_r.stats[attr]) {
-			L1J_r.statsObj.innerHTML += attr + ': '+L1J_r.stats[attr]+'<br>';
+			L1J_r.statsObj.innerHTML += L1J_r.describe(attr, L1J_r.stats[attr]) + '<br>';
 		}
 	}
 	
@@ -122,12 +172,8 @@ L1J_r.add_rune = function(rune) {
 		for (var i = 0; i < L1J_r.have[type].length; ++i) {
 			if (L1J_r.have[type][i] == 0) {
 				L1J_r.have[type][i] = rune;
-				L1J_r.haveref[type][i].textContent = L1J_r.runes.data[rune].name;
-				/*
-				for (var attr in L1J_r.runes.data[rune].stats) {
-					L1J_r.stats[attr] += L1J_r.runes.data[rune].stats[attr];
-				}
-				*/
+				L1J_r.haveref[type][i].textContent = L1J_r.runes.data[rune].short_name;
+				
 				L1J_r.recalc_stats();				
 				break;				
 			}
@@ -140,11 +186,6 @@ L1J_r.remove_rune = function(element_id) {
 	var parts = element_id.split("_");
 	var type = parts[0], id = parts[1];
 	if (L1J_r.have[type][id] != 0) {
-		/*
-		for (var attr in L1J_r.runes.data[L1J_r.have[type][id]].stats) {
-			L1J_r.stats[attr] -= L1J_r.runes.data[L1J_r.have[type][id]].stats[attr];
-		}
-		*/
 		L1J_r.have[type][id] = 0;
 		L1J_r.haveref[type][id].textContent = '';
 		L1J_r.recalc_stats();
@@ -155,7 +196,7 @@ L1J_r.populate_list = function(value, index, array) {
 	"use strict";
 	var e = document.createElement("span");
 	e.id = value;
-	e.innerHTML = L1J_r.runes.data[value].description;
+	e.innerHTML = L1J_r.runes.data[value].short_name;
 	e.onclick = function() {L1J_r.add_rune(this.id); return false;};
 	var e2 = document.createElement("br");
 	e.appendChild(e2);
@@ -178,6 +219,7 @@ L1J_r.parse_runes = function() {
 	var i = 0;
 	var keys = Object.keys(runes.data);
 	while (i < keys.length) {
+		L1J_r.runes.data[keys[i]].short_name = L1J_r.runes.data[keys[i]].name.replace(/lesser|greater|mark|seal|glyph|quintessence| of /ig,"").trim();
 		if (runes.data[keys[i]].rune.tier == "3") {
 			L1J_r.runes.index.push(keys[i]);
 			L1J_r.runes.runes[runes.data[keys[i]].rune.type].push(keys[i]);
