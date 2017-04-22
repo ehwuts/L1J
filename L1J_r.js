@@ -55,7 +55,7 @@ L1J_r.switch_visible = function (id) {
 L1J_r.recalc_stats = function() {
 	"use strict";
 	var code = L1J_r.have.red.join(",") + "," + L1J_r.have.yellow.join(",") + "," + L1J_r.have.blue.join(",") + "," + L1J_r.have.black.join(",");	
-	L1J_r.codeObj.textContent = code;
+	L1J_r.codeObj.value = code;
 	
 	for (var attr in L1J_r.stats) {
 		L1J_r.stats[attr] = 0;
@@ -203,6 +203,15 @@ L1J_r.parse_runes = function() {
 	}
 };
 
+L1J_r.load_list = function() {
+	var code = L1J_r.codeObj.value.split(',');
+	var i = 0;
+	while (i < code.length) {
+		L1J_r.add_rune(code[i]);
+		++i;
+	}
+}
+
 L1J_r.init = function () {
 	"use strict";
 	L1J_r.rcount = document.getElementById("rcount");
@@ -215,6 +224,7 @@ L1J_r.init = function () {
 	L1J_r.black = document.getElementById('black');
 	L1J_r.statsObj = document.getElementById('statslist');
 	L1J_r.codeObj = document.getElementById('rdat');
+	L1J_r.rload = document.getElementById('rload');
 	
 	L1J_r.marks = document.getElementById('red');
 	L1J_r.seals = document.getElementById('yellow');
@@ -226,6 +236,7 @@ L1J_r.init = function () {
 	document.getElementById('seals').onclick = function() { L1J_r.switch_visible('seals'); return false; };
 	document.getElementById('glyphs').onclick = function() { L1J_r.switch_visible('glyphs'); return false; };
 	document.getElementById('quints').onclick = function() { L1J_r.switch_visible('quints'); return false; };
+	rload.onclick = L1J_r.load_list;
 	
 	L1J_r.switch_visible('marks');
 		
