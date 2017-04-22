@@ -104,11 +104,11 @@ L1J.update_preview = function() {
 	
 	L1J.ref.preview.innerHTML = "HP " + L1J.stats.hp.toFixed(2) + " | MP " + L1J.stats.mp.toFixed(2) + "<br>" 
 		+ "HPR "  + L1J.stats.hpregen.toFixed(2) + " |  MPR " + L1J.stats.mpregen.toFixed(2) + "<br>"
-		+ "ARP " + L1J.stats.lethality + "/" + L1J.stats.percarmorpenetration.toFixed(2) + " | MPN " + L1J.stats.flatmagicpenetration + "/" + L1J.stats.percmagicpenetration.toFixed(2) + "<br>"
-		+ "LS " + L1J.stats.lifesteal + " | SV " + L1J.stats.spellvamp + "<br>"
+		+ "ARP " + L1J.stats.lethality + "/" + (100 * L1J.stats.percarmorpenetration).toFixed(0) + "% | MPN " + L1J.stats.flatmagicpenetration + "/" + (100 * L1J.stats.percmagicpenetration).toFixed(0) + "%<br>"
+		+ "LS " + (100 * L1J.stats.lifesteal) + "% | SV " + (100 * L1J.stats.spellvamp) + "%<br>"
 		+ "AD " + L1J.stats.attackdamage.toFixed(2) + " | AP " + L1J.stats.magicdamage.toFixed(2) + "<br>"
 		+ "AR " + L1J.stats.armor.toFixed(2) + " | MR " + L1J.stats.spellblock.toFixed(2) + "<br>"
-		+ "AS " + L1J.stats.attackspeedeffective.toFixed(4) + " | CDR " + L1J.stats.percentcooldown.toFixed(2) + "<br>"
+		+ "AS " + L1J.stats.attackspeedeffective.toFixed(4) + " | CDR " + (100 * L1J.stats.percentcooldown).toFixed(1) + "%<br>"
 		+ "Crit " + L1J.stats.crit + " | MS " + L1J.stats.movespeed + "<br>";
 }
 
