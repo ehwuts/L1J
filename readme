@@ -8,7 +8,15 @@ Inc. League of Legends © Riot Games, Inc.
 
 About
 
-Originally developed for version 5.6.1, this project tends to stall 
+L1J - Level 1 Jungle
+
+The goal of this project is provide accurate accounts for various 
+possible jungle starts as if actually playing them through. The 
+same calculations could also be expanded to provide champion 
+dps for various builds, but for now the goal of describing time 
+and resource expenditures of a first clear is more than enough.
+
+Last developed for version 5.6.1, this project tends to stall 
 out while reimpleminting and verifying jungle data and mastery 
 calculations for a new season. 
 Making accurate calculations is further complicated by the absence 
