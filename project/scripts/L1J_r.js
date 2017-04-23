@@ -50,8 +50,9 @@ L1J_r.describe = function(a, v) {
 	if (L1J_r.descriptions[a] === undefined) result = L1J_r.stats[a] + " " + a;
 	else {
 		if (L1J_r.descriptions[a].scaling) v = (18.0 * v).toFixed(2);
-		if (L1J_r.descriptions[a].percent) v = (100.0 * v).toFixed(2) + "%";
+		else if (L1J_r.descriptions[a].percent) v = (100.0 * v).toFixed(2) + "%";
 		else v = v.toFixed(2);
+		
 		if (v > 0) v = "+" + v;
 		
 		result = v + " " + L1J_r.descriptions[a].desc;
