@@ -296,11 +296,11 @@ L1J_m.init = function() {
 	L1J_m.define_layout();
 	L1J_m.masteries = JSON.parse(L1J_m.masteries_json);
 	
-	L1J_m.img.icons.src = "img/masteries.png";
+	L1J_m.img.icons.src = "project/materials/masteries.png";
 	L1J_m.img.icons.onload = L1J_m.init_finish;
-	L1J_m.img.icons_grey.src = "img/masteries_grey.png";
+	L1J_m.img.icons_grey.src = "project/materials/masteries_grey.png";
 	L1J_m.img.icons_grey.onload = L1J_m.init_finish;	
-	L1J_m.img.decoration.src = "img/decoration.png";
+	L1J_m.img.decoration.src = "project/materials/decoration.png";
 	L1J_m.img.decoration.onload = L1J_m.init_finish;
 };
 
