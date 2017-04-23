@@ -1,3 +1,11 @@
+{This Application} isn't endorsed by Riot Games and doesn't reflect 
+the views or opinions of Riot Games or anyone officially involved 
+in producing or managing League of Legends. League of Legends and 
+Riot Games are trademarks or registered trademarks of Riot Games, 
+Inc. League of Legends © Riot Games, Inc.
+
+---------------------------------------------------------------------
+
 About
 
 Originally developed for version 5.6.1, this project tends to stall 
@@ -5,5 +13,26 @@ out while reimpleminting and verifying jungle data and mastery
 calculations for a new season. 
 Making accurate calculations is further complicated by the absence 
 of several statistics from the data provided in riot's api, as well
-as the ingame effect of bonuses being an arbitrary ordering of 
-flat, multiplicative, and additive percentage adjustments.
+as the ingame effect of bonuses being an arbitrary ordering of flat, 
+multiplicative, and additive percentage adjustments.
+
+---------------------------------------------------------------------
+
+License
+
+Copyright (c) 2017 Ehwuts Matsu
+
+Permission is hereby granted, free of charge, to any person obtaining 
+a copy of this software, to use, copy, modify, merge, publish, and/or 
+distribute, copies of the Software, and to permit others to do so, 
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be 
+included in all copies or substantial portions of the Software.
+
+Any materials or data, cached or otherwise, belonging to or giving 
+the impression of belonging to Riot Games® or League of Legends® must
+be used in accordance with the restrictions put force by Riot Games®
+for their use, as described at the following urls:
+https://developer.riotgames.com/terms-and-conditions.html
+http://www.riotgames.com/legal-jibber-jabber
