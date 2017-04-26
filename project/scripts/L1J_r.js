@@ -164,6 +164,8 @@ L1J_r.recalc_stats = function() {
 	}
 	
 	L1J_r.rcount.innerHTML = a + "/" + b + "/" + c + "/" + d;
+	
+	L1J.update_preview();
 }
 
 L1J_r.add_rune = function(rune) {

@@ -121,6 +121,8 @@ L1J_m.gen_code = function() {
 		++panel;
 	}
 	L1J_m.mdat.value = code;
+	
+	L1J.update_preview();
 }
 
 L1J_m.redraw_full = function() {
