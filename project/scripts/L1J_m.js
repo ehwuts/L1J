@@ -148,7 +148,7 @@ L1J_m.redraw_full = function() {
 L1J_m.add_m = function(panel, row, col) {
 	var has = L1J_m.masteries[panel][row].m[col];
 	var could = ((L1J_m.masteries[panel][row].s||(L1J_m.ss < 30 && (row==0 || L1J_m.masteries[panel][row-1].s == L1J_m.masteries[panel][row-1].c)))&&L1J_m.masteries[panel][row].m[col]!==undefined);
-	
+	if (L1J_m.ss == 30 && L1J_m.masteries[panel][row].m[col] == L1J_m.masteries[panel][row].s) could = false;
 	if (could) {
 		if (!L1J_m.masteries[panel][row].s) {
 			var adj = Math.min(30-L1J_m.ss, L1J_m.masteries[panel][row].c);
