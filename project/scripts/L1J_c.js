@@ -1,4 +1,8 @@
-var mobs = {
+var L1J_c = {};
+//big krug gives 46xp at level 2, and 125 at all levels therafter?
+//lesser krug spawns are one level lower
+//scuttler one level down, ..most of the time?
+L1J_c.mobs = {
    "Crimson Raptor":{"hp":  700, "ad": 20, "ar": 30, "mr": 30, "as":0.667, "ms":350, "ranged": true, "gold": 62, "xp": 15, "v": true },
            "Raptor":{"hp":  400, "ad": 13, "ar":  0, "mr":  0, "as":1.000, "ms":443, "ranged":false, "gold": 10, "xp": 26, "v": true },
 "Greater Murk Wolf":{"hp": 1300, "ad": 42, "ar": 10, "mr":  0, "as":0.625, "ms":443, "ranged":false, "gold": 75, "xp": 26, "v": true },
@@ -18,11 +22,7 @@ var mobs = {
      "Elder Dragon":{"hp": 8380, "ad":150, "ar":120, "mr": 70, "as":0.500, "ms":330, "ranged": true, "gold":250, "xp":575, "v":false },
      "Baron Nashor":{"hp":10000, "ad":400, "ar":120, "mr": 70, "as":0.750, "ms":300, "ranged": true, "gold": 25, "xp":746, "v":false },
 };
-//big krug gives 46 at level 2, and 125 at all levels therafter
-//lesser krug spawns are one level lower, min level 2
-//scuttler one level down, most of the time?
-
-var scaling = {
+L1J_c.scaling = {
   "Crimson Raptor":[{"hp" : 700, "ad" : 20, "ar" : 30, "mr" : 30},
 					{"hp" : 700, "ad" : 20, "ar" : 30, "mr" : 30},
 					{"hp" : 788, "ad" : 28, "ar" : 45, "mr" : 45},
@@ -144,7 +144,7 @@ var scaling = {
 					{"hp" : 2640, "ad" : 0, "ar" : 60, "mr" : 60}]
 }
 
-var camps = {
+L1J_c.camps = {
 "Red Brambleback":{"initial":100, "respawn":300, "level":2, "mobs":["Red Brambleback"]},
   "Blue Sentinel":{"initial":100, "respawn":300, "level":2, "mobs":["Blue Sentinel"]},
         "Raptors":{"initial": 97, "respawn":100, "level":2, "mobs":["Crimson Raptor", "Raptor", "Raptor", "Raptor", "Raptor", "Raptor"]},
