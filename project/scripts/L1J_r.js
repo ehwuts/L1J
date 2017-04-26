@@ -7,6 +7,7 @@ L1J_r = {
 	"have" : {'red': [0,0,0,0,0,0,0,0,0], 'yellow': [0,0,0,0,0,0,0,0,0], 'blue': [0,0,0,0,0,0,0,0,0], 'black': [0,0,0]},
 	"haveref" : {'red': [], 'yellow': [], 'blue': [], 'black': []},
 	"rcount" : "",
+	"rsum" : {"red" : 0, "yellow" : 0, "blue" : 0, "black" : 0},
 	"descriptions" : ""
 };
 L1J_r.descriptions = {
@@ -164,8 +165,13 @@ L1J_r.recalc_stats = function() {
 	}
 	
 	L1J_r.rcount.innerHTML = a + "/" + b + "/" + c + "/" + d;
+	L1J_r.rsum.red = a;
+	L1J_r.rsum.yellow = b;
+	L1J_r.rsum.blue = c;
+	L1J_r.rsum.black = d;
 	
 	L1J.update_preview();
+	L1J.warn_runes();
 }
 
 L1J_r.add_rune = function(rune) {

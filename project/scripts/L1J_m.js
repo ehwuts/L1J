@@ -123,6 +123,7 @@ L1J_m.gen_code = function() {
 	L1J_m.mdat.value = code;
 	
 	L1J.update_preview();
+	L1J.warn_masteries();
 }
 
 L1J_m.redraw_full = function() {

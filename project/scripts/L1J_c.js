@@ -1,4 +1,9 @@
-var L1J_c = {};
+var L1J_c = {
+	"mobs" : "",
+	"scaling" : "",
+	"camps" : "",
+	"ref" : ""
+};
 //big krug gives 46xp at level 2, and 125 at all levels therafter?
 //lesser krug spawns are one level lower
 //scuttler one level down, ..most of the time?
@@ -161,3 +166,19 @@ L1J_c.camps = {
    "Elder Dragon":{"initial":999, "respawn":999, "level":6, "mobs":["Elder Dragon"]},
    "Baron Nashor":{"initial":999, "respawn":999, "level":1, "mobs":["Baron Nashor"]}
 };
+
+L1J_c.init = function() {
+	L1J_c.ref = {
+		"camp" : document.getElementById("camp")
+	};
+	
+	var camp_names = Object.keys(L1J_c.camps);
+	for (var i in camp_names) {
+		var e = document.createElement("option");
+		e.value = camp_names[i];
+		e.text = camp_names[i];
+		L1J_c.ref.camp.add(e);
+	}
+}
+
+window.addEventListener("load", L1J_c.init);
