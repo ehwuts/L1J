@@ -6,6 +6,8 @@ var L1J = {
 
 L1J.update_preview = function() {
 	"use strict";
+	if (L1J.ref.champsel.value == "") return;
+	
 	L1J.stats = Object.assign({}, champions.data[L1J.ref.champsel.value].stats);
 	L1J.stats.level = L1J.ref.level.value;
 	L1J.stats.partype = champions.data[L1J.ref.champsel.value].partype;
