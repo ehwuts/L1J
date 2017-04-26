@@ -2,4 +2,9 @@ TODO:
 specialcase rune effects missing from api, eg lethality
 all the item things
 ingame confirmation of mastery calcs
+
 actually implement combat sim
+	parse route input
+	parse items input
+	all the things
+	?skill descriptor shorthand field
