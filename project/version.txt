@@ -1,0 +1,18 @@
+0.3.7 - 2017/04/26
+* Begin version tracking with arbitrary version number
+* Add interfaces for inputting runes and masteries
+* Add partial main interface for simulator execution
+* Add champion stat display including level scaling, runes, and simpler masteries
+
+Pre-History
+
+0.2.0 - 2016?
+* fully clientside overhaul with new season data
+* abandoned before inputs completed
+* no simulation functionality whatsoever
+
+0.1.0 - 2015?
+* First version
+* Functioning combat simulation
+* php
+* lost to the mists of time
