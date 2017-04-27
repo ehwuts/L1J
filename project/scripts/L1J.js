@@ -196,6 +196,7 @@ L1J.init = function() {
 		"level" : document.getElementById("clevel"),
 		"rimg" : document.getElementById("img_chk_runes"),
 		"mimg" : document.getElementById("img_chk_masteries"),
+		"ver" : document.getElementById("data_versions")
 	}
 	
 	var i = 0;
@@ -215,6 +216,8 @@ L1J.init = function() {
 		L1J.ref.level.add(e);
 		++i;
 	}
+	
+	L1J.ref.ver.innerHTML = "champions-" + champions.version + " runes-" + runes.version + " masteries-" + masteries_data.version + " items-" + items.version;
 	
 	L1J.ref.main_a.onclick = function () { L1J.switch_view("main"); };
 	L1J.ref.runes_a.onclick = function () { L1J.switch_view("runes"); };
