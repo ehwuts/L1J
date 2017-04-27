@@ -10,6 +10,12 @@ L1J_r = {
 	"rsum" : {"red" : 0, "yellow" : 0, "blue" : 0, "black" : 0},
 	"descriptions" : ""
 };
+L1J_r.runeaux = {
+	"5253" : {"stats" : {"rFlatLethalityMod" : 1.60 }},
+	"5402" : {"stats" : {"rFlatLethalityMod" : 1.13 }},
+	"5418" : {"stats" : {"rFlatLethalityMod" : 2.24 }},
+	"5343" : {"stats" : {"rFlatLethalityMod" : 3.20 }},
+}
 L1J_r.descriptions = {
 	"FlatArmorMod" : { "desc" : "Armor", "percent" : false, "scaling" : false },
 	"FlatCritChanceMod" : { "desc" : "Crit Chance", "percent" : true, "scaling" : false },
@@ -230,6 +236,9 @@ L1J_r.parse_runes = function() {
 	while (i < keys.length) {
 		L1J_r.runes.data[keys[i]].short_name = L1J_r.runes.data[keys[i]].name.replace(/lesser|greater|mark|seal|glyph|quintessence| of /ig,"").trim();
 		if (runes.data[keys[i]].rune.tier == "3") {
+			if (L1J_r.runeaux[keys[i]] !== undefined) {
+				Object.assign(runes.data[keys[i]].stats, L1J_r.runeaux[keys[i]].stats);
+			}
 			L1J_r.runes.index.push(keys[i]);
 			L1J_r.runes.runes[runes.data[keys[i]].rune.type].push(keys[i]);
 			var k = 0;
