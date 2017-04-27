@@ -45,6 +45,7 @@ L1J_r.descriptions = {
 	"rFlatMPRegenModPerLevel" : { "desc" : "Scalng Mana Regen", "percent" : false, "scaling" : true },
 	"rFlatMagicDamageModPerLevel" : { "desc" : "Ability Power at lvl 18", "percent" : false, "scaling" : true },
 	"rFlatMagicPenetrationMod" : { "desc" : "Magic Penetration", "percent" : false, "scaling" : false },
+	"rFlatLethalityMod" : { "desc" : "Lethality", "percent" : false, "scaling" : false },
 	"rFlatPhysicalDamageModPerLevel" : { "desc" : "Attack Damage at lvl 18", "percent" : false, "scaling" : true },
 	"rFlatSpellBlockModPerLevel" : { "desc" : "Magic Resist at lvl 18", "percent" : false, "scaling" : true },
 	"rPercentCooldownMod" : { "desc" : "Cooldown Reduction", "percent" : true, "scaling" : false },

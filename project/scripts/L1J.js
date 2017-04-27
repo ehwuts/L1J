@@ -47,6 +47,7 @@ L1J.update_preview = function() {
 		L1J.stats.mp += L1J_r.stats.FlatEnergyPoolMod + L1J.stats.level * L1J_r.stats.rFlatEnergyModPerLevel;
 		L1J.stats.mpregen += L1J_r.stats.FlatEnergyRegenMod + L1J.stats.level * L1J_r.stats.rFlatEnergyRegenModPerLevel;
 	}
+	L1J.stats.lethality += L1J_r.stats.rFlatLethalityMod;
 	L1J.stats.bonusarmor += L1J_r.stats.FlatArmorMod + L1J.stats.level * L1J_r.stats.rFlatArmorModPerLevel;
 	L1J.stats.bonusspellblock += L1J_r.stats.FlatSpellBlockMod + L1J.stats.level * L1J_r.stats.rFlatSpellBlockModPerLevel;
 	L1J.stats.attackdamage += L1J_r.stats.FlatPhysicalDamageMod + L1J.stats.level * L1J_r.stats.rFlatPhysicalDamageModPerLevel;
