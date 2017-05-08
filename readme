@@ -17,12 +17,10 @@ dps for various builds, but for now the goal of describing time
 and resource expenditures of a first clear is more than enough.
 
 Last developed for version 5.6.1, this project tends to stall 
-out while reimpleminting and verifying jungle data and mastery 
-calculations for a new season. 
-Making accurate calculations is further complicated by the absence 
-of several statistics from the data provided in riot's api, as well
-as the ingame effect of bonuses being an arbitrary ordering of flat, 
-multiplicative, and additive percentage adjustments.
+out while reimplementing and verifying jungle data and mastery 
+calculations for a new season. Its function is also somewhat 
+obsolete, stemming from the days when leashes and even smite were
+optional.
 
 ---------------------------------------------------------------------
 
