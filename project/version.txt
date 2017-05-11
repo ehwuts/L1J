@@ -1,3 +1,8 @@
+0.3.8 - 2017/5/11
+* Camp stats through level 11 in script data
+* Fancier main interface
+* Partial input validation
+
 0.3.7 - 2017/04/26
 * Begin version tracking with arbitrary version number
 * Add interfaces for inputting runes and masteries
