@@ -14,19 +14,29 @@
 <table>
 <tr>
 <td>
-<select id="champion"><option value="">----------</option></select><br>
-fights <select id="camp"></select><br>
-starting with <select id="cskill"><option value="0">Q</option><option value="1">W</option><option value="2">E</option></select><br>
-<br>
 Runes: <span id="rcount">0/0/0/0</span> <img src="project/res/U.png" id="img_chk_runes" alt="U" class="check"><br>
 Masteries: <span id="mcount">0/0/0</span> <img src="project/res/U.png" id="img_chk_masteries" alt="U" class="check"><br>
 <br>
+<button type="button" id="run">Execute</button><br>
+<br>
+<select id="champion"><option value="">----------</option></select><br>
+<span id="simple_view">
+fights <select id="camp"></select><br>
+starting with <select id="cskill"><option value="0">Q</option><option value="1">W</option><option value="2">E</option></select><br>
+</span>
+<br>
+<span id="complex_view" class="hide2">
 Level <select id="clevel"></select><br>
 Route <img src="project/res/U.png" id="img_chk_route" alt="U" class="check"><br>
 <textarea id="route" rows="4" cols="30">Red Brambleback, Murk Wolves, Blue Sentinel, Gromp, Raptors, Krugs</textarea><br>
-Items (case sensitive) <img src="project/res/U.png" id="img_chk_items" alt="U" class="check"><br>
+Items <img src="project/res/U.png" id="img_chk_items" alt="U" class="check"><br>
 <textarea id="itemstart" rows="4" cols="30">Hunter's Talisman, Refillable Potion</textarea><br>
-<button type="button" id="run">Execute</button>
+Skill Order<br>
+<textarea id="skillorder" rows="1" cols="30">Q W Q</textarea><br>
+<br>
+</span>
+<button type="button" id="simple_toggle" class="hide2">View Simple</button> <button type="button" id="complex_toggle">View Complex</button>
+<br><br>
 </td>
 <td id="stats_preview"></td>
 <td id="combat_log"></td>
@@ -89,11 +99,13 @@ Items (case sensitive) <img src="project/res/U.png" id="img_chk_items" alt="U" c
 <div id="debug" class="hide2">
 <div id="debug_champ"></div><div id="debug_r"></div><div id="debug_m"></div></div>
 <br>
+<div class="footer">
 <div class="disclaimer">[*] In game results will vary at least slightly. Please verify the accuracy of predicted outcomes in practice before relying upon them in a real game.</div>
 <div class="disclaimer">[*] {This Application} isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</div>
 <br>
 <div id="data_versions"></div>
-<div class="disclaimer">v0.3.7 - updated 2017/4/28</div>
+<div>v0.3.7 - updated 2017/4/28</div>
+</div>
 <script src="project/materials/champions.js"></script>
 <script src="project/materials/masteries.js"></script>
 <script src="project/materials/runes.js"></script>

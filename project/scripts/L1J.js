@@ -197,7 +197,26 @@ L1J.init = function() {
 		"level" : document.getElementById("clevel"),
 		"rimg" : document.getElementById("img_chk_runes"),
 		"mimg" : document.getElementById("img_chk_masteries"),
-		"ver" : document.getElementById("data_versions")
+		"ver" : document.getElementById("data_versions"),
+		"simple_view" : document.getElementById("simple_view"),
+		"complex_view" : document.getElementById("complex_view"),
+		"simple_button" : document.getElementById("simple_toggle"),
+		"complex_button" : document.getElementById("complex_toggle")
+	}
+	
+	L1J.ref.simple_button.onclick = function() {
+		L1J.ref.simple_view.className = "";
+		L1J.ref.complex_button.className = "";
+		L1J.ref.complex_view.className = "hide2";
+		L1J.ref.simple_button.className = "hide2";
+		return false;
+	}
+	L1J.ref.complex_button.onclick = function() {
+		L1J.ref.simple_view.className = "hide2";
+		L1J.ref.complex_button.className = "hide2";
+		L1J.ref.complex_view.className = "";
+		L1J.ref.simple_button.className = "";
+		return false;
 	}
 	
 	var i = 0;
