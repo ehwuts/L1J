@@ -2,6 +2,7 @@ var L1J_c = {
 	"mobs" : "",
 	"scaling" : "",
 	"camps" : "",
+	"camps_lower": "",
 	"ref" : ""
 };
 //big krug gives 46xp at level 2, and 125 at all levels therafter?
@@ -167,17 +168,45 @@ L1J_c.camps = {
    "Baron Nashor":{"initial":999, "respawn":999, "level":1, "mobs":["Baron Nashor"]}
 };
 
+L1J_c.fight = function() {
+	
+}
+
+L1J_c.start_fight = function() {
+	
+	
+	return false;
+}
+
+L1J_c.check_route = function() {
+	var route = L1J_c.ref.route.value.split(",");
+	for (var i in route) {
+		route[i] = route[i].trim();
+		if (L1J_c.camps_lower[route[i] == undefined) {
+			L1J_c.ref.rimg.src = L1J.img.no;
+			return;
+		}
+	}
+	L1J_c.ref.rimg.src = L1J.img.yes;
+}
+
 L1J_c.init = function() {
 	L1J_c.ref = {
-		"camp" : document.getElementById("camp")
+		"camp" : document.getElementById("camp"),
+		"route" : document.getElementById("route"),
+		"rimg" : document.getElementById("img_chk_route")
 	};
+	
+	L1J_c.ref.route.onchange = L1J_c.check_camp;
 	
 	var camp_names = Object.keys(L1J_c.camps);
 	for (var i in camp_names) {
 		var e = document.createElement("option");
 		e.value = camp_names[i];
 		e.text = camp_names[i];
+		L1J_c.camps_lower = camp_names[i].toLowerCase;
 		L1J_c.ref.camp.add(e);
+		document.getElementById("run").onclick = start_fight;
 	}
 }
 
