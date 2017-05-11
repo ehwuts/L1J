@@ -2,7 +2,7 @@ var L1J = {
 	"view" : "main",
 	"ref" : "",
 	"stats" : "",
-	"img" : { "yes" : "project/res/Y.png", "no" : "project/res/N.png", "maybe", "project/res/U.png"}
+	"img" : { "yes" : "project/res/Y.png", "no" : "project/res/N.png", "maybe" : "project/res/U.png"}
 };
 
 L1J.update_preview = function() {
