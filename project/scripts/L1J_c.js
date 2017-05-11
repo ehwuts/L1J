@@ -179,12 +179,10 @@ L1J_c.start_fight = function() {
 }
 
 L1J_c.check_route = function() {
-	console.log("test");
 	var route = L1J_c.ref.route.value.split(",");
 	for (var i in route) {
 		route[i] = route[i].trim().toLowerCase();
 		if (L1J_c.camps_lower[route[i]] == undefined) {
-			console.log(route[i]);
 			L1J_c.ref.rimg.src = L1J.img.no;
 			return;
 		}
